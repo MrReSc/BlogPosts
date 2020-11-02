@@ -1,7 +1,7 @@
 # GitHub Repositories zum selbst gehostetem Gitea spiegeln
 Wie man am Beispiel von `youtube-dl` gesehen hat, kann es sehr schnell gehen und der eigene Zugang zu einem Dienstanbieter wird gesperrt. Ich habe dies als Anlass genommen um von meinem GitHub Repositories ein Backup anzulegen.
 
-![Gitea](Gitea.png)
+![](Gitea.png)
 
 Zuerst wollte ich mit GitHub [Actions](https://github.com/features/actions) und [Git Sync](https://github.com/wei/git-sync) bei jedem neuen `push` das ganze Repository zu einem anderen Hoster synchronisieren. Das hat grundsätzlich auch funktioniert. Allerdings sollte man dann aus Sicherheitsgründen für jedes neue Repository ein neues [Schlüsselpaar](https://de.wikipedia.org/wiki/Asymmetrisches_Kryptosystem) erstellen und man muss die Actions einrichten. Diese Lösung hat zusätzlich den grossen Nachteil, dass GitHub theoretisch auch Kontrolle über das gespiegelte Repository hat, da der Private-Key bei GitHub liegt. Somit wäre ein Verfahren, das nach einem Pull-Prinzip funktioniert eleganter.
 
@@ -46,13 +46,13 @@ Nun kann das Webinterface aufgerufen (`http://IP-ADRESSE:3000`) und die Grundein
 ## Repository spiegeln
 Im Webinterface kann nun oben rechts mittels dem `+` Symbol ein Repository migriert werden.
 
-![neue_Mirgration](Neue_Migration.png)
+![](Neue_Migration.png)
 
 Nachdem das Quellen Repository eingegeben wurde ist es wichtig, dass beim `Mirgrationstyp` der Haken gesetzt wird.
 
-![Mirgration](Migration.png)
+![](Migration.png)
 
 Nachdem die Migration abgeschlossen ist, war's das eigentlich schon. In den Einstellungen ist ersichtlich, dass das Spiegeln alle zehn Minuten ausgeführt wird.
 
-![Monitoring](Monitoring.png)
+![](Monitoring.png)
 

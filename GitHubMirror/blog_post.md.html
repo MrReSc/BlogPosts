@@ -1,0 +1,41 @@
+<h1 id="github-repositories-zum-selbst-gehostetem-gitea-spiegeln">GitHub Repositories zum selbst gehostetem Gitea spiegeln</h1>
+<p>Wie man am Beispiel von <code>youtube-dl</code> gesehen hat, kann es sehr schnell gehen und der eigene Zugang zu einem Dienstanbieter wird gesperrt. Ich habe dies als Anlass genommen um von meinem GitHub Repositories ein Backup anzulegen.</p>
+<p><img src="Gitea.png" /></p>
+<p>Zuerst wollte ich mit GitHub <a href="https://github.com/features/actions">Actions</a> und <a href="https://github.com/wei/git-sync">Git Sync</a> bei jedem neuen <code>push</code> das ganze Repository zu einem anderen Hoster synchronisieren. Das hat grundsätzlich auch funktioniert. Allerdings sollte man dann aus Sicherheitsgründen für jedes neue Repository ein neues <a href="https://de.wikipedia.org/wiki/Asymmetrisches_Kryptosystem">Schlüsselpaar</a> erstellen und man muss die Actions einrichten. Diese Lösung hat zusätzlich den grossen Nachteil, dass GitHub theoretisch auch Kontrolle über das gespiegelte Repository hat, da der Private-Key bei GitHub liegt. Somit wäre ein Verfahren, das nach einem Pull-Prinzip funktioniert eleganter.</p>
+<p>Bei meiner Recherche habe ich herausgefunden, dass <a href="https://gitea.io/en-us/">Gitea</a> genau diese Funktionalität hat. Just am selben Tag wurde in <a href="https://blog.binaergewitter.de/2020/10/29/binaergewitter-talk-number-264-das-python2-von-php/">Binärgewitter Talk #264</a> genau das angesprochen.</p>
+<h2 id="gitea-selbst-hosten">Gitea selbst hosten</h2>
+<p>Das selbst Hosten bringt zusätzlich den Vorteil, dass alle Daten auch in meinen automatischen Backups enthalten sind.</p>
+<p>Ich möchte meine Gitea Instanz nur in meinem lokalen Netzwerk verfügbar machen. Ich arbeite weiterhin mit GitHub. Somit muss ich mich nicht um die Sicherheit kümmern, da alles hinter der Firewall läuft.</p>
+<p>Ich habe Gitea als Docker Container laufen. Gitea stellt eine einfache <a href="https://docs.gitea.io/en-us/install-with-docker/">Anleitung</a> zur Verfügung. Ich habe mich für die <a href="https://docs.gitea.io/en-us/install-with-docker/#basics">Basis</a> Variante entschieden. Somit ist keine zusätzliche Datenbank nötig, es wird eine <code>SQLlite3</code> Datenbank verwendet.</p>
+<p>Mit der folgenden <code>docker-compose.yml</code> Datei läuft die Gitea Instanz in wenigen Sekunden.</p>
+<pre><code>version: &quot;3&quot;
+
+networks:
+  gitea:
+    external: false
+
+services:
+  server:
+    image: gitea/gitea:1
+    container_name: Gitea
+    environment:
+      - USER_UID=1000
+      - USER_GID=1000
+    restart: always
+    networks:
+      - gitea
+    volumes:
+      - ./data:/data
+      - /etc/TZ:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - &quot;3000:3000&quot;
+      - &quot;222:22&quot;</code></pre>
+<p>Nun kann das Webinterface aufgerufen (<code>http://IP-ADRESSE:3000</code>) und die Grundeinstellungen gemacht werden.</p>
+<h2 id="repository-spiegeln">Repository spiegeln</h2>
+<p>Im Webinterface kann nun oben rechts mittels dem <code>+</code> Symbol ein Repository migriert werden.</p>
+<p><img src="Neue_Migration.png" /></p>
+<p>Nachdem das Quellen Repository eingegeben wurde ist es wichtig, dass beim <code>Mirgrationstyp</code> der Haken gesetzt wird.</p>
+<p><img src="Migration.png" /></p>
+<p>Nachdem die Migration abgeschlossen ist, war’s das eigentlich schon. In den Einstellungen ist ersichtlich, dass das Spiegeln alle zehn Minuten ausgeführt wird.</p>
+<p><img src="Monitoring.png" /></p>
