@@ -52,7 +52,7 @@ Nachdem das Quellen Repository eingegeben wurde ist es wichtig, dass beim `Mirgr
 
 ![](Migration.png)
 
-Nachdem die Migration abgeschlossen ist, war's das eigentlich schon. In den Einstellungen ist ersichtlich, dass das Spiegeln alle zehn Minuten ausgeführt wird.
+Nachdem die Migration abgeschlossen ist, war's das eigentlich schon. In den Einstellungen zum Repository kann nun die Zeit für die automatische Synchronisierung eingestellt werden.
 
 ![](Monitoring.png)
 

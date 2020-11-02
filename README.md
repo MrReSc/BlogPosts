@@ -1,7 +1,6 @@
 # BlogPosts
 Here are all blogposts that have no code repository.
 
-
 ## Convert to HTML
 By executing the `script md_to_html.sh` all markdown files (`*.md`) in this repository are converted to HTML.
 
