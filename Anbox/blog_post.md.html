@@ -1,0 +1,26 @@
+<h1 id="anbox---android-apps-auf-gnulinux">Anbox - Android Apps auf GNU/Linux</h1>
+<p><a target="_blank" rel="noopener" href="https://anbox.io/">Anbox</a> ermöglicht es, Android Apps auf deinem GNU/Linux System auszuführen. Dazu packt Anbox das Android Betriebssystem in einen Container, abstrahiert den Hardwarezugriff und integriert zentrale Systemdienste in ein GNU/Linux System. Jede Android Anwendung wird wie jede andere native Anwendung in das Betriebssystem integriert. Um das zu erreichen, verwendet Anbox Standard Linux Technologien wie Container (LXC), um das Android Betriebssystem vom Host zu trennen. Jede Androidversion ist für diesen Ansatz geeignet, und die Macher von Anbox versuchen, mit der neuesten verfügbaren Version des Android Open Source Project Schritt zu halten.</p>
+<p><img src="Anbox_logo.png" /></p>
+<p>Die folgenden Funktionen bietet Anbox:</p>
+<ul>
+<li>Open Source - Der gesamte Quellcode ist als Open Source verfügbar und unter den Bedingungen der Apache- und GPLv3-Lizenz lizenziert.</li>
+<li>Keine Einschränkungen - Da auf Anbox ein ganzes Android System läuft, kann konzeptionell jede Anwendung ausgeführt werden.</li>
+<li>Sicher - Anbox packt Android Anwendungen in eine dicht verschlossene Box ohne direkten Zugriff auf die Hardware oder deine Daten.</li>
+<li>Performant - Anbox läuft mit Android ohne Hardware Virtualisierung und überbrückt nahtlos die Funktionen zur Hardwarebeschleunigung.</li>
+<li>Integriert - Enge Integration mit dem Host Betriebssystem, um eine reichhaltige Funktionspalette zu bieten.</li>
+<li>Konvergent - Anbox skaliert über verschiedene Formfaktoren hinweg ähnlich wie Android. Sie funktioniert auf einem Laptop und einem Mobiltelefon.</li>
+</ul>
+<h2 id="installation">Installation</h2>
+<p>Die <a target="_blank" rel="noopener" href="https://docs.anbox.io/userguide/install.html#install-the-anbox-snap">Installation</a> von Anbox auf einem normalen Linux System ist einfach und unkompliziert, solange das System Snaps unterstützt. Aus diesem Grund habe ich Anbox in einer Ubuntu 20.04 VM (mit <a target="_blank" rel="noopener" href="https://gnulinux.ch/manjaro-in-gnome-boxes-ausprobiert">GNOME Boxes</a>) ausprobiert da ich Fedora nutzte und normalerweise keine Snaps verwende.</p>
+<pre class="language-bash"><code>sudo snap install --devmode --beta anbox</code></pre>
+<h2 id="apps-installieren">Apps installieren</h2>
+<p>Um Apps in den von Anbox bereitgestellten Android Container zu <a target="_blank" rel="noopener" href="https://docs.anbox.io/userguide/install_apps.html">installieren</a> wird derzeit die Sideloading Funktionalität verwendet, die Android zur Verfügung stellt. Dazu muss die Android Debug Bridge (ADB) auf dem Host-System installiert werden.</p>
+<pre class="language-bash"><code>sudo apt install android-tools-adb</code></pre>
+<p>Sobald ADB installiert ist, sind wir bereit, Android Apps zu installieren.</p>
+<p>Anbox bietet keine Funktionalität um Android Apps herunterzuladen. Man muss sie von einer anderen Quelle im Internet herunterladen. Viele Open-Source-Projekte bieten auf den Projektseiten eine APK Datei zum Download an. Auf der Website von <a target="_blank" rel="noopener" href="https://f-droid.org/">F-Droid</a> können auch alle Anwendungen als APK heruntergeladen werden. Sobald man das APK Paket hat, kann mit dem folgenden Befehl die App in den Android Container installieren:</p>
+<pre class="language-bash"><code>adb install antennapod.apk</code></pre>
+<h2 id="anwendungen-starten">Anwendungen starten</h2>
+<p>Nun kann über das Anwendungsmenu von Betriebssystem Anbox gestartet werden.</p>
+<p><img src="Anbox_start.png" /></p>
+<p>Sobald Anbox offen ist, kann die zuvor installierte App geöffnet werden.</p>
+<p><img src="App.png" /></p>
