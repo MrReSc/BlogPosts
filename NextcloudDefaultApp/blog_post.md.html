@@ -1,0 +1,15 @@
+<h1 id="nextcloud-dashboard-deaktivieren">Nextcloud Dashboard deaktivieren</h1>
+<p>Ab <a target="_blank" rel="noopener" href="https://nextcloud.com/blog/nextcloud-hub-20-debuts-dashboard-unifies-search-and-notifications-integrates-with-other-technologies/">Nextcloud 20</a> wird standardmässig ein Dashboard präsentiert, wenn man sich im Webinterface anmeldet. Da ich meine Nextcloud nur für Dateien, Kontakte und Kalender brauche, macht für mich das Dashboard wenig Sinn. Ich möchte gerne die Dateiansicht beim Start zurück.</p>
+<p><img src="dashboard.png" /></p>
+<p>Um das Dashboard beim Start zu deaktivieren, muss man die Standardanwendung des Webinterfaces ändern.</p>
+<h2 id="name-der-neuen-standardanwendung-herausfinden">Name der neuen Standardanwendung herausfinden</h2>
+<p>Um die Standardanwendung ändern zu können, muss man zunächst herausfinden, wie der Name der Anwendung lautet.</p>
+<p>Dazu bewegt man am besten den Mauszeiger über das Icon der gewünschten Anwendung und schaut sich die Adresse an, die im Browser im unteren Bereich anzeigt wird. Der letzte Teil der Adresse verrät den korrekten Namen der Anwendung.</p>
+<p><img src="app_name.png" /></p>
+<h2 id="standardanwendung-ändern">Standardanwendung ändern</h2>
+<p>Um die gewünschte Anwendung beim nächsten Login direkt zu starten, muss man den folgenden Eintrag der Datei <code>config.php</code> hinzufügen:</p>
+<pre class="language-php"><code>&#39;defaultapp&#39; =&gt; &#39;files&#39;,</code></pre>
+<p>Die Datei <code>config.php</code> befindet sich im Verzeichnis <code>/config</code>. Bei mir sieht das Ende der Datei nun wie folgt aus:</p>
+<p><img src="config.png" /></p>
+<p>Einzelne Anwendungen können auch auf Gruppen beschränkt sein. Bei einem Benutzer, der keinen Zugriff auf die neu definierte Standardanwendung hat, startet weiterhin die ursprüngliche Standardanwendung (Dashboard). Wenn ein falscher Wert eingegeben wird, wird auch die ursprüngliche Standardanwendung geöffnet. Es ist jedoch auch möglich, zusätzliche Standardanwendung zu definieren, sodass beim Benutzer in diesem Fall einfach die nächste oder übernächste Anwendungen gestartet wird.</p>
+<pre class="language-php"><code>&#39;defaultapp&#39; =&gt; &#39;files,photos,calendar&#39;,</code></pre>
