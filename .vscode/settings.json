@@ -1,4 +1,7 @@
 {
     "cSpell.enabled": false,
-    "cSpell.language": ",de"
+    "cSpell.language": ",de",
+    "languageToolLinter.languageTool.ignoredWordsInWorkspace": [
+        "size"
+    ]
 }

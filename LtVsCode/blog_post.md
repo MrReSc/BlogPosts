@@ -3,9 +3,9 @@ Ich schreibe alle meine Artikel in Markdown und als Editor verwende ich VS Code.
 
 ![](LT_logo.png)
 
-LanguageTool ist ein kostenloses und quelloffenes Grammatikprüfprogramm, und alle seine Funktionen stehen zum Herunterladen zur Verfügung.Die LanguageTool-Website ist an das proprietäre Schwesterprojekt LanguageTool Plus angeschlossen, das eine verbesserte Fehlererkennung für Englisch und Deutsch sowie eine leichtere Überarbeitung längerer Texte nach dem Open-Core-Modell ermöglicht. 
+LanguageTool ist ein kostenloses und quelloffenes Grammatikprüfprogramm, und alle seine Funktionen stehen zum Herunterladen zur Verfügung. Die LanguageTool-Website ist an das proprietäre Schwesterprojekt LanguageTool Plus angeschlossen, das eine verbesserte Fehlererkennung für Englisch und Deutsch sowie eine leichtere Überarbeitung längerer Texte nach dem Open-Core-Modell ermöglicht. 
 
-LanguageTool gibt es als Browser Add-on für die gängigen Browser (Firefox, Chrome, Edge, Opera), es lässt sich in das Office-Programm deiner Wahl einbinden (LibreOffice, MS Word, Google Docs und OpenOffice), es gibt eine [öffentliche API](https://dev.languagetool.org/public-http-api) die benutzt werden kann und man kann einen eigenen LanguageTool-Server betreiben. Die Software steht unter der `GNU LGPL v2.1+` Lizenz.
+LanguageTool gibt es als Browser Add-on für die gängigen Browser (Firefox, Chrome, Edge, Opera), es lässt sich in das Office-Programm Deiner Wahl einbinden (LibreOffice, MS Word, Google Docs und OpenOffice), es gibt eine [öffentliche API](https://dev.languagetool.org/public-http-api) die benutzt werden kann und man kann einen eigenen LanguageTool-Server betreiben. Die Software steht unter der `GNU LGPL v2.1+` Lizenz.
 
 Im folgenden Artikel zeige ich mein Setup für meinen spezielle Use Case. Es gibt sicher viele Einstellungen, die ich nicht behandelt habe. Um den Server aufzusetzen, sollte man sich mit Docker ein wenig auskennen. Anwenderkenntnisse reichen aus.
 
@@ -48,12 +48,12 @@ services:
     volumes:
         - ./ngrams:/ngrams
 ```
-LanguageTool wird Standardmässig mit einer minimalen Java Heap Size (`-Xms`) von 256 MB und einer maximalen Heap Size (`-Xmx`) von 512 MB gestartet. Ich habe diese Standardwerte überschreiben, indem ich die Umgebungsvariablen `Java_Xms` und `Java_Xmx` gesetzt habe.
+LanguageTool wird Standardmässig mit einer minimalen Java heap size (`-Xms`) von 256 MB und einer maximalen heap size (`-Xmx`) von 512 MB gestartet. Ich habe diese Standardwerte überschreiben, indem ich die Umgebungsvariablen `Java_Xms` und `Java_Xmx` gesetzt habe.
 
 Nun kann der Server mit dem Befehl `sudo docker-compose up -d` gestartet werden.
 
 ### LanguageTool
-Wenn der Server läuft, muss nun die Erweiterung in VS Code eingerichtet werden. Mit dem Shortcut `Ctrl+,` öffnet sich das Einstellungsmenü von VS Code. Im Untermenü `Extensions -> LanguageTool Linter` muss der Server eingestellt werden. Die Serveradresse ist die IP des Servers und der Port des Docker Containers. Bei mir ist das `http://192.168.0.2:8010`.
+Wenn der Server läuft, muss nun die Erweiterung in VS Code eingerichtet werden. Mit dem Shortcut `Ctrl+,` öffnet sich das Einstellungsmenü von VS Code. Im Untermenü `Extensions -> LanguageTool Linter` muss der zuvor eingerichtete Server eingestellt werden. Die Serveradresse ist die IP des Servers und der Port des Docker Containers. Bei mir ist das `http://192.168.0.2:8010`.
 
 ![](LT_settings.png)
 
@@ -68,7 +68,7 @@ Sobald ich nun ein Markdown Dokument offen habe, wird die Rechtschreibung konsta
 
 Die Erkennung von Fehlern geht über reine Grammatik hinaus, was echt erstaunlich gut funktioniert. Es funktioniert um Längen besser als MS Word oder LibreOffice.
 
-Der eigene LT Server bietet sicher noch potenzial für weitere Setups wie z. B. das Firefox Add-on oder im LibreOffice. Allerdings benötige ich das noch nicht.
+Der eigene LT Server bietet sicher noch potenzial für weitere Setups wie z. B. das Firefox Add-on oder im LibreOffice. Allerdings benötige ich das nicht.
 
 Die Performance ist ziemlich gut, ich spüre keinen Unterschied zur öffentlichen API. Allerdings hat mein Server auch einen Read und Write SSD Chache und mein Netzwerk ist ziemlich flott.
 
