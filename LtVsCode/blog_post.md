@@ -14,6 +14,11 @@ Ich verwende die Erweiterung [LanguageTool Linter](https://marketplace.visualstu
 
 ![](LT_install.png)
 
+Alternativ kann die Erweiterung auch mit dem folgenden Befehl im Suchfeld (`Ctrl+P`) installiert werden:
+```
+ext install davidlday.languagetool-linter
+```
+
 Die Standardeinstellungen werden wahrscheinlich nicht funktionieren, aber sie sind dazu da, um sicherzustellen, dass die Verwendung der öffentlichen API von LanguageTool freiwillig erfolgt.
 
 Für einen ersten Test kann man der [Option drei der Anleitung](https://github.com/davidlday/vscode-languagetool-linter#option-3-public-api-service) folgenden und die öffentliche API verwenden.
@@ -29,7 +34,8 @@ Die Struktur sieht bei mir wie folgt aus:
 
 ![](LT_Struktur.png)
 
-Um den Container zu starten, nutzte ich die folgende `docker-compose` Datei. Wichtig ist, dass der Pfad zu den `n-gram` Daten angepasst wird, falls diese verwendet werden.
+Um den Container zu starten, nutzte ich die folgende `docker-compose` Datei. Die Datei sollte den Namen `docker-compose.yml` haben, so muss beim Starten nicht auf eine spezifische Datei verwiesen werden, wenn der `docker-compose up` Befehl in diesem Verzeichnis ausgeführt wird.
+Wichtig ist, dass der Pfad zu den `n-gram` Daten angepasst wird, falls diese verwendet werden. Wenn die `docker-compose` Datei und die `n-gram` Daten im selben Verzeichnis liegen, kann der relative Pfad `./ngrams` verwendet werden.
 
 ```
 version: "3"
@@ -53,7 +59,7 @@ LanguageTool wird Standardmässig mit einer minimalen Java heap size (`-Xms`) vo
 Nun kann der Server mit dem Befehl `sudo docker-compose up -d` gestartet werden.
 
 ### LanguageTool
-Wenn der Server läuft, muss nun die Erweiterung in VS Code eingerichtet werden. Mit dem Shortcut `Ctrl+,` öffnet sich das Einstellungsmenü von VS Code. Im Untermenü `Extensions -> LanguageTool Linter` muss der zuvor eingerichtete Server eingestellt werden. Die Serveradresse ist die IP des Servers und der Port des Docker Containers. Bei mir ist das `http://192.168.0.2:8010`.
+Wenn der Server läuft, muss nun die Erweiterung in VS Code eingerichtet werden. Mit dem Shortcut `Ctrl+,` öffnet sich das Einstellungsmenü von VS Code. Im Untermenü `Extensions -> LanguageTool Linter` muss der zuvor eingerichtete Server eingestellt werden. Die Serveradresse ist die IP des Servers und der Port des Docker Containers. Bei mir ist das `http://192.168.0.2:8010`. Wenn der Docker Container auf dem lokalen Rechner gestartet wurde und nicht auf einem Server, muss man die IP-Adresse des `localhost` nehmen. Dann wäre die Adresse `http://127.0.0.1:8010`.
 
 ![](LT_settings.png)
 
