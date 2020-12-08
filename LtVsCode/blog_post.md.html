@@ -1,0 +1,46 @@
+<h1 id="languagetool-in-vs-code">LanguageTool in VS Code</h1>
+<p>Ich schreibe alle meine Artikel in Markdown und als Editor verwende ich VS Code. Viele aus der GNU/Linux.ch Redaktion benutzen <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/LanguageTool">LanguageTool</a> (LT) in der einen oder anderen Form um Ihre Texte zu korrigieren.</p>
+<p><img src="LT_logo.png" /></p>
+<p>LanguageTool ist ein kostenloses und quelloffenes Grammatikprüfprogramm, und alle seine Funktionen stehen zum Herunterladen zur Verfügung. Die LanguageTool-Website ist an das proprietäre Schwesterprojekt LanguageTool Plus angeschlossen, das eine verbesserte Fehlererkennung für Englisch und Deutsch sowie eine leichtere Überarbeitung längerer Texte nach dem Open-Core-Modell ermöglicht.</p>
+<p>LanguageTool gibt es als Browser Add-on für die gängigen Browser (Firefox, Chrome, Edge, Opera), es lässt sich in das Office-Programm Deiner Wahl einbinden (LibreOffice, MS Word, Google Docs und OpenOffice), es gibt eine <a target="_blank" rel="noopener" href="https://dev.languagetool.org/public-http-api">öffentliche API</a> die benutzt werden kann und man kann einen eigenen LanguageTool-Server betreiben. Die Software steht unter der <code>GNU LGPL v2.1+</code> Lizenz.</p>
+<p>Im folgenden Artikel zeige ich mein Setup für meinen spezielle Use Case. Es gibt sicher viele Einstellungen, die ich nicht behandelt habe. Um den Server aufzusetzen, sollte man sich mit Docker ein wenig auskennen. Anwenderkenntnisse reichen aus.</p>
+<h2 id="languagetool-erweiterung-für-vs-code-installieren">LanguageTool Erweiterung für VS Code installieren</h2>
+<p>Ich verwende die Erweiterung <a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=davidlday.languagetool-linter">LanguageTool Linter</a> von David L. Day. Am einfachsten ist es, die Erweiterung direkt in VS Code zu suchen und zu installieren.</p>
+<p><img src="LT_install.png" /></p>
+<p>Die Standardeinstellungen werden wahrscheinlich nicht funktionieren, aber sie sind dazu da, um sicherzustellen, dass die Verwendung der öffentlichen API von LanguageTool freiwillig erfolgt.</p>
+<p>Für einen ersten Test kann man der <a target="_blank" rel="noopener" href="https://github.com/davidlday/vscode-languagetool-linter#option-3-public-api-service">Option drei der Anleitung</a> folgenden und die öffentliche API verwenden.</p>
+<h2 id="einrichten-der-erweiterung-und-des-servers">Einrichten der Erweiterung und des Servers</h2>
+<p>Da das Nutzen der öffentlichen API einige <a target="_blank" rel="noopener" href="https://dev.languagetool.org/public-http-api">Einschränkungen</a> mit sich bringt und ich auch nicht möchte, dass sensible Texte bei einem Dienst im Internet landen, betreibe ich den <a target="_blank" rel="noopener" href="https://hub.docker.com/r/erikvl87/languagetool">LanguageTool Server</a> in einem Docker Container bei mir im lokalen Netzwerk.</p>
+<h3 id="server">Server</h3>
+<p>LanguageTool kann auf grosse <a target="_blank" rel="noopener" href="https://dev.languagetool.org/finding-errors-using-n-gram-data">n-gram</a> Datensätze zurückgreifen, um Fehler bei Wörtern zu erkennen, die oft verwechselt werden. Um diese Daten nutzten zu können, müssen sie zuerst <a target="_blank" rel="noopener" href="https://languagetool.org/download/ngram-data/">heruntergeladen</a> und entpackt werden. Die n-gram Daten gibt es für Deutsch, Englisch, Spanisch, Französisch und Niederländisch. Ich habe nur die deutschen <code>n-gram</code> Daten heruntergeladen. Der Container muss auf diese Daten zugreifen können.</p>
+<p>Die Struktur sieht bei mir wie folgt aus:</p>
+<p><img src="LT_Struktur.png" /></p>
+<p>Um den Container zu starten, nutzte ich die folgende <code>docker-compose</code> Datei. Wichtig ist, dass der Pfad zu den <code>n-gram</code> Daten angepasst wird, falls diese verwendet werden.</p>
+<pre><code>version: &quot;3&quot;
+
+services:
+  languagetool:
+    image: erikvl87/languagetool
+    container_name: LanguageTool
+    restart: always
+    ports:
+        - 8010:8010  # Using default port from the image
+    environment:
+        - langtool_languageModel=/ngrams  # OPTIONAL: Using ngrams data
+        - Java_Xms=512m  # OPTIONAL: Setting a minimal Java heap size of 512 mib
+        - Java_Xmx=1g    # OPTIONAL: Setting a maximum Java heap size of 1 Gib
+    volumes:
+        - ./ngrams:/ngrams</code></pre>
+<p>LanguageTool wird Standardmässig mit einer minimalen Java heap size (<code>-Xms</code>) von 256 MB und einer maximalen heap size (<code>-Xmx</code>) von 512 MB gestartet. Ich habe diese Standardwerte überschreiben, indem ich die Umgebungsvariablen <code>Java_Xms</code> und <code>Java_Xmx</code> gesetzt habe.</p>
+<p>Nun kann der Server mit dem Befehl <code>sudo docker-compose up -d</code> gestartet werden.</p>
+<h3 id="languagetool">LanguageTool</h3>
+<p>Wenn der Server läuft, muss nun die Erweiterung in VS Code eingerichtet werden. Mit dem Shortcut <code>Ctrl+,</code> öffnet sich das Einstellungsmenü von VS Code. Im Untermenü <code>Extensions -&gt; LanguageTool Linter</code> muss der zuvor eingerichtete Server eingestellt werden. Die Serveradresse ist die IP des Servers und der Port des Docker Containers. Bei mir ist das <code>http://192.168.0.2:8010</code>.</p>
+<p><img src="LT_settings.png" /></p>
+<p>Unter anderem kann man noch die Sprache und das Verhalten vom LT Linter einstellen. Bei mir sieht es wie folgt aus:</p>
+<p><img src="LT_settings_2.png" /></p>
+<h2 id="ergebnis">Ergebnis</h2>
+<p>Sobald ich nun ein Markdown Dokument offen habe, wird die Rechtschreibung konstant überprüft und mögliche Fehler markiert sowie ein Quick Fix angezeigt, wenn ich mit dem Mauszeiger über die markierte Stelle fahre.</p>
+<p><img src="LT_ergebnis.png" /></p>
+<p>Die Erkennung von Fehlern geht über reine Grammatik hinaus, was echt erstaunlich gut funktioniert. Es funktioniert um Längen besser als MS Word oder LibreOffice.</p>
+<p>Der eigene LT Server bietet sicher noch potenzial für weitere Setups wie z. B. das Firefox Add-on oder im LibreOffice. Allerdings benötige ich das nicht.</p>
+<p>Die Performance ist ziemlich gut, ich spüre keinen Unterschied zur öffentlichen API. Allerdings hat mein Server auch einen Read und Write SSD Chache und mein Netzwerk ist ziemlich flott.</p>
