@@ -7,22 +7,22 @@ Da ich aber keinesfalls möchte, das jemand ohne Forensik Kenntnisse allfällige
 ## GNOME Disks 
 Nach kurzer Recherche hat sich herausgestellt, dass das Programm [GNOME Disks](https://de.wikipedia.org/wiki/Gnome_Disks) (deutsch Laufwerke), alle meine Bedürfnisse erfüllt und es auf meinem System (Fedora 33) schon installiert ist. GNOME Disks (`gnome-disk-utility`) ist bei den meisten GNOME basierenden Desktop Umgebungen schon standardmässig mit dabei.
 
-## Lese- und Schreibleistung messen
+### Lese- und Schreibleistung messen
 Die Lese- und Schreibleistung von USB-Sticks und SD Karten können sehr stark variieren. Dies ist von verschieden Faktoren abhängig. Mit GNOME Disks kann die Lese- und Schreibleistung sehr einfach gemessen werden. Dazu muss das entsprechende Laufwerk ausgewählt werden und über das Menü kann der Leistungstest gestartet werden.
-Ich habe dazu einfach die Standardeinstellungen verwendet und die Resultate aufgeschrieben.
+Ich habe dazu die Standardeinstellungen verwendet und die Resultate aufgeschrieben.
 
 ![](performance.png)
 ![](performance_settings.png)
 ![](performance_test.png)
 
-## Speichermedien sicher löschen
-Ich bin kein Experte was [Dateisysteme](https://de.wikipedia.org/wiki/Dateisystem) und die Speicherung von Daten anbelangt. Grundsätzlich ist es aber so, dass Dateisysteme einen Index pflegen, in dem verzeichnet ist, wo welche Dateien auf dem Datenträger liegen. Wenn nun eine Datei gelöscht wird, wird einfach der Eintrag in diesem Index gelöscht und der Speicherplatz kann von neuen Daten überschrieben werden. Solange das aber nicht geschehen ist, ist die gelöschte Datei noch vorhanden. 
+### Speichermedien sicher löschen
+Ich bin kein Experte was [Dateisysteme](https://de.wikipedia.org/wiki/Dateisystem) und die Speicherung von Daten anbelangt. Grundsätzlich ist es aber so, dass Dateisysteme einen Index pflegen, in dem verzeichnet wird, wo welche Dateien auf dem Datenträger gespeichert sind. Wenn nun eine Datei gelöscht wird, wird einfach der Eintrag im Index gelöscht und der Speicherplatz kann von neuen Daten überschrieben werden. Solange das aber nicht geschehen ist, ist die gelöschte Datei noch vorhanden aber das Betriebssystem kann sie nicht mehr finden.
 
-Um das zu testen, habe ich ein USB-Stick mit GNOME Disks formatiert mit der Einstellung `Schnell`. Dazu muss das entsprechende Laufwerk ausgewählt werden und über das Menü kann das Laufwerk formatiert werden.
+Um das zu testen, habe ich ein USB-Stick mit GNOME Disks mit der Einstellung `Schnell` formatiert. Dazu muss das entsprechende Laufwerk ausgewählt werden und über das Menü kann das Laufwerk formatiert werden.
 
 ![](format_fast.png)
 
-Danach konnte ich mit [photorec](https://de.wikipedia.org/wiki/PhotoRec) (`dnf install testdisk `) die Daten problemlos wiederherstellen.
+Danach konnte ich mit [photorec](https://de.wikipedia.org/wiki/PhotoRec) (`dnf install testdisk `) die Daten problemlos wiederherstellen. Das Betriebssystem und somit der Benutzer konnten die Dateien allerdings nicht mehr sehen.
 
 ```
 PhotoRec 7.1, Data Recovery Utility, July 2019
@@ -52,7 +52,7 @@ Dasselbe vorgehen habe ich mit der Einstellung `Langsam` wiederholt. Das Formati
 
 ![](format_slow.png)
 
-Nun konnte ich mit `photorec` keine Daten wiederherstellen.
+Nun konnte ich mit `photorec` keine Dateien wiederherstellen.
 
 ```
 PhotoRec 7.1, Data Recovery Utility, July 2019
@@ -69,7 +69,7 @@ Recovery completed.
 ```
 
 ## Verschlüsselung
-Die meisten meiner Datenträger sind verschlüsselt. Dadurch entfällt die Problematik mit dem sicheren Löschen der Daten, wenn der Datenträger nicht mehr in meinem Besitz ist. Durch die Verschlüsselung sind die Daten so gut geschützt, dass sie nicht wieder hergestellt werden können ohne den passenden Schlüssel. Das Verschlüsseln von z. B. USB-Stick kann auch mit GNOME Disks gemacht werden. Beim Formatieren des Laufwerks kann die entsprechende Option ausgewählt werden.
+Die meisten meiner Datenträger sind verschlüsselt. Dadurch entfällt die Datenschutz-Problematik, wenn der Datenträger nicht mehr in meinem Besitz ist. Durch die Verschlüsselung sind die Daten so gut geschützt, dass sie nicht wieder hergestellt werden können ohne den passenden Schlüssel. Das Verschlüsseln von z. B. USB-Stick kann auch mit GNOME Disks gemacht werden. Beim Formatieren des Laufwerks kann die entsprechende Option ausgewählt werden.
 
 ![](disk_encrypt.png)
 ![](disk_encrypt_pwd.png)
