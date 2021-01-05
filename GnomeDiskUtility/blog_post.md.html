@@ -1,0 +1,54 @@
+<h1 id="usb-datenträger---frühlingsputz-mit-gnome-disks">USB Datenträger - Frühlingsputz mit GNOME Disks</h1>
+<p>Während den letzten zwei Dekaden haben sich einige USB-Sticks und SD Karten in unserem Haushalt gesammelt. Allerdings hat die Benutzung dieser in den letzten Jahren stark abgenommen. Nun war es an der Zeit, die nicht mehr benötigten Speichermedien, dem Elektrorecycling zuzuführen. Da ich aber keinesfalls möchte, das jemand ohne Forensik Kenntnisse allfällige Daten auf den Speichermedien wieder herstellen kann, wollte ich alle Speichermedien sicher löschen. Als Entscheidungshilfe welche der USB-Stick ich behalten möchte, wollte ich auch die Lese- und Schreibleistung der USB-Sticks und SD Karten messen.</p>
+<p><img src="GNOME_DiskUtility.png" /></p>
+<h2 id="gnome-disks">GNOME Disks</h2>
+<p>Nach kurzer Recherche hat sich herausgestellt, dass das Programm <a target="_blank" rel="noopener" href="https://de.wikipedia.org/wiki/Gnome_Disks">GNOME Disks</a> (deutsch Laufwerke), alle meine Bedürfnisse erfüllt und es auf meinem System (Fedora 33) schon installiert ist. GNOME Disks (<code>gnome-disk-utility</code>) ist bei den meisten GNOME basierenden Desktop Umgebungen schon standardmässig mit dabei.</p>
+<h3 id="lese--und-schreibleistung-messen">Lese- und Schreibleistung messen</h3>
+<p>Die Lese- und Schreibleistung von USB-Sticks und SD Karten können sehr stark variieren. Dies ist von verschieden Faktoren abhängig. Mit GNOME Disks kann die Lese- und Schreibleistung sehr einfach gemessen werden. Dazu muss das entsprechende Laufwerk ausgewählt werden und über das Menü kann der Leistungstest gestartet werden. Ich habe dazu die Standardeinstellungen verwendet und die Resultate aufgeschrieben.</p>
+<p><img src="performance.png" /> <img src="performance_settings.png" /> <img src="performance_test.png" /></p>
+<h3 id="speichermedien-sicher-löschen">Speichermedien sicher löschen</h3>
+<p>Ich kenne mich nicht wirklich mit <a target="_blank" rel="noopener" href="https://de.wikipedia.org/wiki/Dateisystem">Dateisystemen</a> und der Speicherung von Daten aus. Grundsätzlich ist es aber so, dass Dateisysteme einen Index pflegen, in dem verzeichnet wird, wo welche Dateien auf dem Datenträger gespeichert sind. Wenn nun eine Datei gelöscht wird, wird einfach der Eintrag im Index gelöscht und der Speicherplatz kann von neuen Daten überschrieben werden. Solange das aber nicht geschehen ist, ist die gelöschte Datei noch vorhanden. Das Betriebssystem kann sie aber nicht mehr finden ohne den Eintrag im Index.</p>
+<p>Um das zu testen, habe ich ein USB-Stick mit GNOME Disks mit der Einstellung <code>Vorhandene Daten nicht überschreiben (Schnell)</code> formatiert. Dazu muss das entsprechende Laufwerk ausgewählt werden und über das Menü kann das Laufwerk formatiert werden.</p>
+<p><img src="format_fast.png" /></p>
+<p>Danach konnte ich mit <a target="_blank" rel="noopener" href="https://de.wikipedia.org/wiki/PhotoRec">photorec</a> (<code>dnf install testdisk</code>) die Daten problemlos wiederherstellen.</p>
+<pre><code>sudo photorec /dev/sda1</code></pre>
+<pre><code>PhotoRec 7.1, Data Recovery Utility, July 2019
+Christophe GRENIER &lt;grenier@cgsecurity.org&gt;
+https://www.cgsecurity.org
+
+Disk /dev/sda1 - 8052 MB / 7679 MiB (RO) - IS917 innostor
+     Partition                  Start        End    Size in sectors
+   P FAT32                    0   0  1  1022 198 44   15726592
+
+Destination /home/remo/Downloads/photorec/recup_dir
+
+Pass 1 - Reading sector    4723456/15726592, 542 files found
+Elapsed time 0h00m24s - Estimated time to completion 0h00m55
+tx?: 271 recovered
+exe: 172 recovered
+ttf: 40 recovered
+txt: 39 recovered
+png: 15 recovered
+reg: 2 recovered
+bmp: 1 recovered
+gif: 1 recovered
+wim: 1 recovered</code></pre>
+<p>Dasselbe vorgehen habe ich mit der Einstellung <code>Vorhandene Daten mit Nullen überschreiben (Langsam)</code> wiederholt. Das Formatieren dauert natürlich viel länger, da der ganze Datenträger mit Nullen überschrieben wird.</p>
+<p><img src="format_slow.png" /></p>
+<p>Nun konnte ich mit <code>photorec</code> keine Dateien wiederherstellen.</p>
+<pre><code>PhotoRec 7.1, Data Recovery Utility, July 2019
+Christophe GRENIER &lt;grenier@cgsecurity.org&gt;
+https://www.cgsecurity.org
+
+Disk /dev/sda1 - 8052 MB / 7679 MiB (RO) - IS917 innostor
+     Partition                  Start        End    Size in sectors
+   P FAT32                    0   0  1  1022 198 44   15726592
+
+
+0 files saved in /home/remo/Downloads/photorec/recup_dir directory.
+Recovery completed.</code></pre>
+<h2 id="verschlüsselung">Verschlüsselung</h2>
+<p>Die meisten meiner Datenträger sind verschlüsselt. Dadurch entfällt die Datenschutz-Problematik, wenn der Datenträger nicht mehr in meinem Besitz ist. Durch die Verschlüsselung sind die Daten so gut geschützt, dass sie nicht wieder hergestellt werden können ohne den passenden Schlüssel. Das Verschlüsseln von z. B. USB-Stick kann auch mit GNOME Disks gemacht werden. Beim Formatieren des Laufwerks kann die entsprechende Option ausgewählt werden.</p>
+<p><img src="disk_encrypt.png" /> <img src="disk_encrypt_pwd.png" /></p>
+<p>Wenn nun das Laufwerk eingehängt wird, muss das Passwort eingegeben werden.</p>
+<p><img src="disk_decrypt.png" /></p>
