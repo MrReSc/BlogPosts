@@ -1,6 +1,6 @@
 # USB Datenträger - Frühlingsputz mit GNOME Disks
 Während den letzten zwei Dekaden haben sich einige USB-Sticks und SD Karten in unserem Haushalt gesammelt. Allerdings hat die Benutzung dieser in den letzten Jahren stark abgenommen. Nun war es an der Zeit, die nicht mehr benötigten Speichermedien, dem Elektrorecycling zuzuführen.
-Da ich aber keinesfalls möchte, das jemand ohne Forensik Kenntnisse allfällige Daten auf den Speichermedien wieder herstellen kann, wollte ich alle Speichermedien sicher löschen. Als Entscheidungshilfe welche der USB-Stick ich behalten möchte, wollte ich auch die Lese- und Schreibleistung der USB-Sticks messen.
+Da ich aber keinesfalls möchte, das jemand ohne Forensik Kenntnisse allfällige Daten auf den Speichermedien wieder herstellen kann, wollte ich alle Speichermedien sicher löschen. Als Entscheidungshilfe welche der USB-Stick ich behalten möchte, wollte ich auch die Lese- und Schreibleistung der USB-Sticks und SD Karten messen.
 
 ![](GNOME_DiskUtility.png)
 
@@ -16,13 +16,17 @@ Ich habe dazu die Standardeinstellungen verwendet und die Resultate aufgeschrieb
 ![](performance_test.png)
 
 ### Speichermedien sicher löschen
-Ich bin kein Experte was [Dateisysteme](https://de.wikipedia.org/wiki/Dateisystem) und die Speicherung von Daten anbelangt. Grundsätzlich ist es aber so, dass Dateisysteme einen Index pflegen, in dem verzeichnet wird, wo welche Dateien auf dem Datenträger gespeichert sind. Wenn nun eine Datei gelöscht wird, wird einfach der Eintrag im Index gelöscht und der Speicherplatz kann von neuen Daten überschrieben werden. Solange das aber nicht geschehen ist, ist die gelöschte Datei noch vorhanden aber das Betriebssystem kann sie nicht mehr finden.
+Ich kenne mich nicht wirklich mit [Dateisystemen](https://de.wikipedia.org/wiki/Dateisystem) und der Speicherung von Daten aus. Grundsätzlich ist es aber so, dass Dateisysteme einen Index pflegen, in dem verzeichnet wird, wo welche Dateien auf dem Datenträger gespeichert sind. Wenn nun eine Datei gelöscht wird, wird einfach der Eintrag im Index gelöscht und der Speicherplatz kann von neuen Daten überschrieben werden. Solange das aber nicht geschehen ist, ist die gelöschte Datei noch vorhanden. Das Betriebssystem kann sie aber nicht mehr finden ohne den Eintrag im Index.
 
-Um das zu testen, habe ich ein USB-Stick mit GNOME Disks mit der Einstellung `Schnell` formatiert. Dazu muss das entsprechende Laufwerk ausgewählt werden und über das Menü kann das Laufwerk formatiert werden.
+Um das zu testen, habe ich ein USB-Stick mit GNOME Disks mit der Einstellung `Vorhandene Daten nicht überschreiben (Schnell)` formatiert. Dazu muss das entsprechende Laufwerk ausgewählt werden und über das Menü kann das Laufwerk formatiert werden.
 
 ![](format_fast.png)
 
-Danach konnte ich mit [photorec](https://de.wikipedia.org/wiki/PhotoRec) (`dnf install testdisk `) die Daten problemlos wiederherstellen. Das Betriebssystem und somit der Benutzer konnten die Dateien allerdings nicht mehr sehen.
+Danach konnte ich mit [photorec](https://de.wikipedia.org/wiki/PhotoRec) (`dnf install testdisk`) die Daten problemlos wiederherstellen.
+
+```
+sudo photorec /dev/sda1
+```
 
 ```
 PhotoRec 7.1, Data Recovery Utility, July 2019
@@ -48,7 +52,7 @@ gif: 1 recovered
 wim: 1 recovered
 ```
 
-Dasselbe vorgehen habe ich mit der Einstellung `Langsam` wiederholt. Das Formatieren dauert natürlich viel länger, da der ganze Datenträger mit Nullen überschrieben wird.
+Dasselbe vorgehen habe ich mit der Einstellung `Vorhandene Daten mit Nullen überschreiben (Langsam)` wiederholt. Das Formatieren dauert natürlich viel länger, da der ganze Datenträger mit Nullen überschrieben wird.
 
 ![](format_slow.png)
 
