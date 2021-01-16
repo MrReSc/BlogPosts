@@ -7,7 +7,7 @@ Mit einem [Unifying Receiver](https://de.wikipedia.org/wiki/Logitech#Unifying_Re
 
 Solaar ist ein GNU/Linux Geräte-Manager für viele Logitech Tastaturen, Mäuse und Trackpads, die eine kabellose Verbindung zu einem USB Unifying-, Lightspeed- oder Nano-Empfänger herstellen, direkt über ein USB-Kabel verbunden werden oder eine Verbindung über Bluetooth herstellen.
 
-Solaar kann als GUI-Anwendung oder über die Kommandozeilen verwendet werden. Beide Schnittstellen sind in der Lage, die angeschlossenen Geräte aufzulisten und Informationen zu jedem Gerät anzuzeigen, oft auch den Batteriestatus. Solaar ist in der Lage, Geräte mit Empfängern zu koppeln und die Kopplung aufzuheben, sofern dies vom Gerät und Empfänger unterstützt wird. Solaar kann auch einige veränderbare Eigenschaften von Geräten steuern, wie z. B. den  Bildlauf oder das Verhalten von Funktionstasten.
+Solaar kann als GUI-Anwendung oder über die Kommandozeilen verwendet werden. Beide Schnittstellen sind in der Lage, die angeschlossenen Geräte aufzulisten und Informationen zu jedem Gerät anzuzeigen, oft auch den Batteriestatus. Solaar ist in der Lage, Geräte mit Empfängern zu koppeln und die Kopplung aufzuheben, sofern dies vom Gerät und Empfänger unterstützt wird. Solaar kann auch einige veränderbare Eigenschaften von Geräten steuern, wie z. B. den Bildlauf oder das Verhalten von Funktionstasten.
 
 ## Installation
 Für einige Linux Distributionen sind [vorgefertigte Pakete](https://github.com/pwr-Solaar/Solaar#prebuilt-packages) verfügbar. Bei Fedora ist die Installation dank des fertigen Paketes sehr einfach:
