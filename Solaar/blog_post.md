@@ -25,4 +25,4 @@ Das Hauptfenster zeigt alle Logitech Empfänger und Geräte an, die Solaar erken
 
 ![](solaar_use.png)
 
-Nun können neue Geräte mit dem Empfänger gekoppelt oder nicht mehr benötigte Kopplungen aufgehoben und einzelne Einstellungen der Geräte angepasst werden. Die Bedienung ist eigentlich selbsterklärend. Leider ist die Solaar nicht auf Deutsch übersetzt. Wenn Fragen auftauchen, gibt es eine englische [Bedienungsanleitung](https://pwr-solaar.github.io/Solaar/usage). 
+Nun können neue Geräte mit dem Empfänger gekoppelt oder nicht mehr benötigte Kopplungen aufgehoben und einzelne Einstellungen der Geräte angepasst werden. Die Bedienung ist eigentlich selbsterklärend. Leider funktioniert die deutsche Übersetzung auf Fedora 33 nicht ([Issue #1049](https://github.com/pwr-Solaar/Solaar/issues/1049)). Wenn Fragen auftauchen, gibt es eine englische [Bedienungsanleitung](https://pwr-solaar.github.io/Solaar/usage). 
