@@ -1,4 +1,4 @@
-# Metadata Cleaner – Anzeigen und Bereinigen von Metadaten in Dateien
+# Metadata Cleaner - Anzeigen und Bereinigen von Metadaten in Dateien
 
 Metadaten in einer Datei können eine Menge über einem verraten. Kameras zeichnen Daten darüber auf, wann und wo ein Bild aufgenommen wurde und welche Kamera verwendet wurde. Office Anwendungen fügen Dokumenten und Tabellenkalkulationen automatisch Autoren- und Firmeninformationen hinzu. Vielleicht möchten man diese Informationen nicht preisgeben, wenn eine Datei weitergegeben oder auf Social Media veröffentlicht wird. Viele Internetdienste und Messanger entfernen zwar diese Information bevor eine Datei veröffentlicht wird, allerdings hat der jeweilige Dienst dann diese Information.
 
@@ -34,9 +34,8 @@ Um nun die Metainformation zu entfernen, muss nur auf den roten `Reinigen` Butto
 
 In den Einstellungen gibt es noch die Möglichkeit ein oberflächliches Bereinigen zu aktivieren. Im Tooltip steht Folgendes dazu:
 
->Standardmässig könnte der Bereinigungsprozess deine Dateien ein wenig >verändern, um so viele Metadaten wie möglich zu entfernen. Zum Beispiel >könnten Texte in PDF nicht mehr auswählbar sein, komprimierte Bilder könnten 
->nochmals komprimiert werden... Bei einer oberflächlichen Reinigung könnten
->einige Metadaten übrigbleiben, dafür werden die Dateien nicht verändert
->werden.
+>Standardmässig könnte der Bereinigungsprozess deine Dateien ein wenig verändern, um so viele Metadaten wie möglich zu entfernen. Zum Beispiel könnten Texte in PDF nicht mehr auswählbar sein, komprimierte Bilder könnten nochmals komprimiert werden... Bei einer oberflächlichen Reinigung könnten einige Metadaten übrigbleiben, dafür werden die Dateien nicht verändert werden.
 
 Unter Umständen kann diese Einstellung Sinn ergeben. Nach dem Bereinigen kann man die Metadaten der Datei erneut einsehen und entscheiden, ob noch unerwünschte Information vorhanden sind.
+
+Als Letztes möchte ich noch erwähnen, dass das Projekt sehr schnell auf mein [Bug Report](https://gitlab.com/rmnvgr/metadata-cleaner/-/issues/5) reagiert hat und das Problem behoben wurde.

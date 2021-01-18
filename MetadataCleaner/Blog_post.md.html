@@ -1,0 +1,23 @@
+<h1 id="metadata-cleaner---anzeigen-und-bereinigen-von-metadaten-in-dateien">Metadata Cleaner - Anzeigen und Bereinigen von Metadaten in Dateien</h1>
+<p>Metadaten in einer Datei können eine Menge über einem verraten. Kameras zeichnen Daten darüber auf, wann und wo ein Bild aufgenommen wurde und welche Kamera verwendet wurde. Office Anwendungen fügen Dokumenten und Tabellenkalkulationen automatisch Autoren- und Firmeninformationen hinzu. Vielleicht möchten man diese Informationen nicht preisgeben, wenn eine Datei weitergegeben oder auf Social Media veröffentlicht wird. Viele Internetdienste und Messanger entfernen zwar diese Information bevor eine Datei veröffentlicht wird, allerdings hat der jeweilige Dienst dann diese Information.</p>
+<p>Mit dem Tool <a target="_blank" rel="noopener" href="https://gitlab.com/rmnvgr/metadata-cleaner">Metadata Cleaner</a> (deutsch Metadata Reiniger) kann man die Metadaten in Dateien anzeigen und sie so weit wie möglich loswerden.</p>
+<p><img src="icon.png" /></p>
+<p>Metadata Cleaner unterliegt der <code>GNU GENERAL PUBLIC LICENSE, v3</code> und der Quellcode ist auf <a target="_blank" rel="noopener" href="https://gitlab.com/rmnvgr/metadata-cleaner/-/tree/master">Gitlab</a> verfügbar.</p>
+<h2 id="installation">Installation</h2>
+<p>Metadata Cleaner ist als Flatpak auf <a target="_blank" rel="noopener" href="https://flathub.org/apps/details/fr.romainvigier.MetadataCleaner">Flathub</a> erhältlich. Flatpak ist standardmässig auf Fedora installiert. Um loszulegen, muss man nur <a target="_blank" rel="noopener" href="https://flatpak.org/setup/">Flathub aktivieren</a>, danach können im Software Center alle Flatpak’s von Flathub installiert werden.</p>
+<p><img src="install.png" /></p>
+<p>Natürlich kann man Metadata Cleaner auch über die Kommandozeile installieren.</p>
+<pre><code>flatpak install flathub fr.romainvigier.MetadataCleaner</code></pre>
+<h2 id="benutzung">Benutzung</h2>
+<p>Die Benutzung von Metadata Cleaner ist grösstenteils selbsterklärend. Wenn eine Datei mit dem <code>+</code> Button hinzugefügt wurde, können über den <code>Fingerabdruck</code> Button die Metadaten angezeigt werden.</p>
+<p><img src="use1.png" /></p>
+<p>Bei meinem <a target="_blank" rel="noopener" href="https://github.com/ianare/exif-samples/blob/master/jpg/gps/DSCN0029.jpg">Testbild</a> ist die Liste der Metadaten sehr Lang. Hier sieht man eindrücklich, wie viele Informationen zusätzlich zum eigentlichen Bild vorhanden sind. Für den Eigengebrauch der Bilder sind aber Metainformationen wie der Aufnahmeort und Zeit sehr nützlich. Allerdings müssen das Internetdienste oder andere Dritte nicht zwingend wissen.</p>
+<p><img src="use2.png" /></p>
+<p>Um nun die Metainformation zu entfernen, muss nur auf den roten <code>Reinigen</code> Button geklickt werden und danach auf <code>Speichern</code>. Es ist aber <strong>Vorsicht</strong> geboten. Wenn man die Metadaten auf der Originaldatei löscht, sind sie weg.</p>
+<p><img src="use3.png" /></p>
+<p>In den Einstellungen gibt es noch die Möglichkeit ein oberflächliches Bereinigen zu aktivieren. Im Tooltip steht Folgendes dazu:</p>
+<blockquote>
+<p>Standardmässig könnte der Bereinigungsprozess deine Dateien ein wenig verändern, um so viele Metadaten wie möglich zu entfernen. Zum Beispiel könnten Texte in PDF nicht mehr auswählbar sein, komprimierte Bilder könnten nochmals komprimiert werden… Bei einer oberflächlichen Reinigung könnten einige Metadaten übrigbleiben, dafür werden die Dateien nicht verändert werden.</p>
+</blockquote>
+<p>Unter Umständen kann diese Einstellung Sinn ergeben. Nach dem Bereinigen kann man die Metadaten der Datei erneut einsehen und entscheiden, ob noch unerwünschte Information vorhanden sind.</p>
+<p>Als Letztes möchte ich noch erwähnen, dass das Projekt sehr schnell auf mein <a target="_blank" rel="noopener" href="https://gitlab.com/rmnvgr/metadata-cleaner/-/issues/5">Bug Report</a> reagiert hat und das Problem behoben wurde.</p>
