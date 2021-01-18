@@ -2,6 +2,9 @@
     "cSpell.enabled": false,
     "cSpell.language": ",de",
     "languageToolLinter.languageTool.ignoredWordsInWorkspace": [
+        "flathub",
+        "flatpak",
+        "metadata",
         "size"
     ]
 }
