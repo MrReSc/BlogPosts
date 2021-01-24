@@ -1,0 +1,42 @@
+<h1 id="video-downloader---einfaches-frontend-zu-youtube-dl">Video Downloader - Einfaches Frontend zu youtube-dl</h1>
+<p>Mit <a target="_blank" rel="noopener" href="https://github.com/Unrud/video-downloader">Video Downloader</a> kann man Videos von Websites mit einer einfach zu bedienenden Benutzeroberfläche herunterladen.</p>
+<p><img src="VideoDownloader.png" /></p>
+<p>Video Downloader bietet die folgenden Funktionen:</p>
+<ul>
+<li>Konvertieren von Videos in MP3</li>
+<li>Unterstützt passwortgeschützte und private Videos</li>
+<li>Download einzelner Videos oder ganzer Wiedergabelisten</li>
+<li>Wählt automatisch ein Videoformat basierend auf Ihren Qualitätsansprüchen</li>
+</ul>
+<p>Video Downloader basiert auf <code>youtube-dl</code> und unterliegt der <code>GNU GENERAL PUBLIC LICENSE, v3</code>. Der Quellcode ist auf <a target="_blank" rel="noopener" href="https://github.com/Unrud/video-downloader">Github</a> verfügbar.</p>
+<h2 id="installation">Installation</h2>
+<p>Video Downloader ist als <a target="_blank" rel="noopener" href="https://flathub.org/apps/details/com.github.unrud.VideoDownloader">Flatpak</a>, <a target="_blank" rel="noopener" href="https://snapcraft.io/video-downloader">Snap</a> oder auf <code>rpm</code> Paket für Fedora verfügbar.</p>
+<pre class="bash"><code># Flatpak
+flatpak install flathub com.github.unrud.VideoDownloader
+
+# Snap
+sudo snap install video-downloader
+
+# RPM
+sudo dnf install video-downloader</code></pre>
+<h2 id="benutzung">Benutzung</h2>
+<p>Wenn man nur die Audiospur eines Videos möchte, kann man nach der Vorwahl von <code>Audio</code> einfach den entsprechenden Link in das <code>URL</code> Feld einfügen und auf Herunterladen drücken.</p>
+<p><img src="audio.png" /></p>
+<p>Falls es sich um eine Wiedergabeliste handelt, hat man die Wahl alle oder nur das einzelne Video herunterzuladen.</p>
+<p><img src="playlist.png" /></p>
+<p>Möchte man ein Video herunterladen, ist das Vorgehen identisch zum Audio. Zusätzlich kann noch die gewünschte Qualität eingestellt werden.</p>
+<p><img src="video1.png" /> <img src="video2.png" /></p>
+<h2 id="versteckte-einstellungen">Versteckte Einstellungen</h2>
+<p>Das Verhalten des Programms kann mit <a target="_blank" rel="noopener" href="https://developer.gnome.org/GSettings/">GSettings</a> noch angepasst werden. Das Vorgehen ist auf der <a target="_blank" rel="noopener" href="https://github.com/Unrud/video-downloader#hidden-configuration-options">Projektseite</a> beschrieben. Ich habe die diese Einstellungen selbst nicht getestet.</p>
+<h3 id="download-ordner">Download Ordner</h3>
+<p>Die Voreinstellung für den Download Ordner ist <code>xdg-download/VideoDownloader</code>. Falls man das Ändern möchte, kann ein absoluter Pfad oder ein relativer Pfad wie <code>~/Downloads/VideoDownloader</code> oder <a target="_blank" rel="noopener" href="https://wiki.ubuntuusers.de/Homeverzeichnis/#Vorgegebene-Verzeichnisse">xdg-download/VideoDownloader</a> verwendet werden.</p>
+<p><strong>Flatpak</strong></p>
+<pre class="bash"><code>flatpak run --command=gsettings com.github.unrud.VideoDownloader set com.github.unrud.VideoDownloader download-folder &#39;~/VideoDownloader&#39;</code></pre>
+<p><strong>Snap</strong></p>
+<pre class="bash"><code>snap run --shell video-downloader -c &#39;gsettings &quot;$@&quot;&#39; &#39;&#39; set com.github.unrud.VideoDownloader download-folder &#39;~/VideoDownloader&#39;</code></pre>
+<h3 id="mpeg-bevorzugen">MPEG bevorzugen</h3>
+<p>Bevorzugt man <code>MPEG</code> Videos anstelle von freien Formaten, wenn beide mit derselben Auflösung und Bildrate verfügbar sind, kann man das auch Ändern.</p>
+<p><strong>Flatpak</strong></p>
+<pre class="bash"><code>flatpak run --command=gsettings com.github.unrud.VideoDownloader set com.github.unrud.VideoDownloader prefer-mpeg true</code></pre>
+<p><strong>Snap</strong></p>
+<pre class="bash"><code>snap run --shell video-downloader -c &#39;gsettings &quot;$@&quot;&#39; &#39;&#39; set com.github.unrud.VideoDownloader prefer-mpeg true</code></pre>
