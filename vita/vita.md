@@ -1,0 +1,3 @@
+Remo ist Teilzeit Softwareentwickler und Teilzeit Hausmann und lebt in der Schweiz. Seit vielen Jahren programmiert er in verschiedensten Industriebereichen Software von Hardware nahmen Realtime Anwendungen bis zu Frontends. Dadurch ist er schon mit diversen Programmiersprachen und Frameworks in Berührung gekommen.
+Seit zehn Jahren ist sein Interesse an Freier Software gross. Er beteiligt sich mit kleine Beiträgen an diversen Open-Source-Projekten und pflegt auch eigen initiierte Projekte.
+Seine Interessen sind breit gefächert. Wissenschaftliche arbeiten und deren Methodik findet er sehr faszinierend. Auch dem Laufsport ist er seit vielen Jahren treu.
