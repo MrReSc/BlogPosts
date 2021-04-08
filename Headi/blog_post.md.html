@@ -1,0 +1,36 @@
+<h1 id="headi---aufruf-zum-testen">Headi - Aufruf zum Testen</h1>
+<p>In den letzten zwei Monaten habe ich neben Arbeit und Familie meine erste Android-App gebaut. Der Antrieb dazu war privater Natur und ich habe keinerlei kommerzielle Interessen daran. Ich möchte hier kurz meine Arbeit mit euch Teilen.</p>
+<p><img src="logo.png" /></p>
+<p>Headi (Headache Diary) ist eine App um Kopfschmerzen zu protokollieren. Da es sich dabei um sehr sensible Daten handelt, werden keine Daten an irgendwelche Cloud-Dienste übertragen. Alle Daten werden nur lokal gespeichert. Headi benötigt auch keinerlei Berechtigungen vom Benutzer. Headi bietet eine einfache Analyse der aufgezeichneten Daten. Die Aufzeichnungen können als CSV-Datei zur weiteren Analyse der Daten oder als PDF Dokument exportiert werden. Um ein Backup zu erstellen, kann die komplette Datenbank gespeichert werden. Es war mit sehr wichtig, die Daten so einfach wie möglich exportieren zu können.</p>
+<p>Damit sicher keine Daten im Internet landen, habe ich auch das von Android angebotene automatische Backup <code>allowBackup</code> ab der Version <code>1.10.1-beta</code> deaktiviert. Die Version <code>1.10.1-beta</code> sollte in einigen Tagen im F-Droid Store erscheinen.</p>
+<pre><code>&lt;manifest ... &gt;
+    ...
+    &lt;application android:allowBackup=&quot;false&quot; ... &gt;
+        ...
+    &lt;/application&gt;
+&lt;/manifest&gt;
+</code></pre>
+<p>Ich habe die App, dank wertvollen Tipps einiger Redakteure, im F-Droid Store veröffentlicht. In einem weiteren Artikel möchte ich zu einem späteren Zeitpunkt noch die Veröffentlichung im F-Droid Store beleuchten. Allerdings ist die App noch nicht vollständig getestet. Auch gibt es sie erst in deutscher und englischer Sprache.</p>
+<p>Es wäre schön, wenn einige von euch die App Installieren würden, und die Funktionen durchtesten oder die App gleich Einsetzten. Feedback und Bug Reports können auf der GitHub Projektseite <a target="_blank" rel="noopener" href="https://github.com/MrReSc/Headi">https://github.com/MrReSc/Headi</a> hinterlassen werden.</p>
+<p><a target="_blank" rel="noopener" href="https://f-droid.org/packages/com.headi.app/"><img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" height="125" alt="Get it on F-Droid"></a></p>
+<h2 id="beitragen">Beitragen</h2>
+<p>Headi ist ein Open-Source-Projekt. Die App steht unter der <code>MIT</code> Lizenz. Wenn du auch etwas dazu beitragen wills, würde ich mich sehr darüber freuen. Folgend findest du einige Ideen, was du beitragen könntest:</p>
+<ul>
+<li>Headi braucht noch Übersetzungen. Du kannst helfen, Headi in deine Sprache zu übersetzen. Alles, was du tun musst, ist, einen Account bei <a target="_blank" rel="noopener" href="https://crwd.in/headi">Crowdin</a> zu erstellen und die Texte zu übersetzen.</li>
+<li>Weitere Analysen der Daten in der App wären sinnvoll. Wenn du Ideen hast, teile diese doch mit mir. Wenn du programmieren kannst, kannst du sie implementieren.</li>
+<li>Es gibt noch einiges Potenzial, um das Design zu verbessern.</li>
+<li>Wenn du gut zeichnen kannst, wären schönere Bilder für die Regionen auf dem Kopf sehr willkommen.</li>
+<li>Es sind auch noch keine Unit-Tests implementiert worden. Wenn du gerne Tests programmierst, würde ich mich über diese freuen.</li>
+<li>Mit GitHub Actions könnte man CI/CD implementieren. Das wäre auch toll.</li>
+</ul>
+<p>Wenn du Hilfe benötigst um einen Beitrag zu Leisten, melde dich doch bei mir.</p>
+<h2 id="screenshots">Screenshots</h2>
+<p align="left">
+<img alt="Light" src="1.jpg" width="30%">         <img alt="Dark" src="4.jpg" width="30%">         <img alt="Dark" src="2.jpg" width="30%">
+</p>
+<p align="left">
+<img alt="Light" src="3.jpg" width="30%">         <img alt="Dark" src="5.jpg" width="30%">         <img alt="Dark" src="6.jpg" width="30%">
+</p>
+<p align="left">
+<img alt="Light" src="7.jpg" width="30%">         <img alt="Dark" src="8.jpg" width="30%">
+</p>
