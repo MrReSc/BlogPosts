@@ -1,0 +1,99 @@
+<h1 id="wie-du-eine-app-bei-f-droid-veröffentlichst">Wie du eine App bei F-Droid veröffentlichst</h1>
+<p>In meinem <a target="_blank" rel="noopener" href="https://gnulinux.ch/headi-aufruf-zum-testen">letzten Artikel</a> habe ich kurz meine erste Android-App <a target="_blank" rel="noopener" href="https://f-droid.org/de/packages/com.headi.app/">Headi</a> vorgestellt. Als ich im Redaktionsteam von meiner App erzählte, hat mich Ulf (ub1x) auf die spannenden Artikel von <a target="_blank" rel="noopener" href="https://www.izzysoft.de/izzy">Izzy</a>, einem Maintainer von F-Droid und Betreiber des <a target="_blank" rel="noopener" href="https://apt.izzysoft.de/fdroid/">IzzyOnDroid</a> <a target="_blank" rel="noopener" href="https://de.wikipedia.org/wiki/Repository">Repositorium</a> (Repo), aufmerksam gemacht. In diesem Artikel möchte ich kurz meine Erfahrung mit dem Veröffentlichen meiner App und einen Leitfaden dazu mit euch teilen.</p>
+<p><img src="fdroid.png" /></p>
+<h2 id="erste-schritte">Erste Schritte</h2>
+<p>Ehrlich gesagt, war es nicht gerade einfach, die Prozesse hinter F-Droid zu durchschauen. Es ist zwar viel <a target="_blank" rel="noopener" href="https://f-droid.org/de/docs/">Dokumentation</a> vorhanden, aber für mich war es nicht gerade verständlich und bei vielem hatte ich das Gefühl, es sei veraltet. Da hat mir der Artikel <a target="_blank" rel="noopener" href="https://android.izzysoft.de/articles/named/fdroid-intro-2?lang=de">“F-Droid für fortgeschrittene Anwender und für Entwickler”</a> insbesondere der Abschnitt <a target="_blank" rel="noopener" href="https://android.izzysoft.de/articles/named/fdroid-intro-2?lang=de#rfp">“Für Entwickler: Prozess der Integration einer App in F-Droid”</a> von Izzy sehr geholfen.</p>
+<p>Als Erstes sollte man sicherstellen, dass die App, die veröffentlicht werden soll, die folgenden <a target="_blank" rel="noopener" href="https://f-droid.org/de/docs/Inclusion_Policy/">Aufnahmekriterien</a> erfüllt. F-Droid formuliert es so (etwas gekürzt und übersetzt):</p>
+<blockquote>
+<p>Anmerkung:</p>
+<ul>
+<li>Wir können keine Apps mit Googles proprietären <code>Play-Services</code> bauen.</li>
+<li>Wir können keine Apps bauen, die proprietäre Tracking Analyse-Abhängigkeiten wie Crashlytics und Firebase verwenden.</li>
+<li>Wir können keine Apps mit proprietären Werbebibliotheken bauen. Wir haben nichts gegen Werbung (siehe <a target="_blank" rel="noopener" href="https://f-droid.org/wiki/page/AntiFeatures">AntiFeatures</a>), aber sie muss auf eine FLOSS-kompatible Weise bereitgestellt werden.</li>
+<li>Wir können keine Anwendungen bauen, die Non-Free-Buildtools benötigen, einschliesslich Oracles JDK oder einige Pre-Release-Toolchains.</li>
+</ul>
+<p>Zusätzlich:</p>
+<ul>
+<li>Der Quellcode der Anwendung muss in einem öffentlich zugänglichen Versionskontrollsystem gepflegt werden.</li>
+<li>Die Software sollte keine zusätzlichen ausführbaren Binärdateien herunterladen.</li>
+<li>Die Software sollte ihre eigene eindeutige Android-Paket-ID verwenden.</li>
+<li>Obwohl es nicht ideal ist, können “nicht-funktionale” Assets (z.B. Artworks) unter weniger freizügigen Lizenzen als funktionaler Code akzeptiert werden.</li>
+<li>Markenzeichen dürfen nicht verletzt werden, und alle anderen rechtlichen Anforderungen müssen beachtet werden.</li>
+<li>F-Droid beantragt keine API-Schlüssel selbst. Werden solche von der App benötigt, müssen sie im Quell-Repo hinterlegt sein.</li>
+<li>Binäre Abhängigkeiten wie JAR-Dateien müssen durch quellbasierte Versionen ersetzt oder aus einem vertrauenswürdigen Repository verwendet werden.</li>
+</ul>
+<p>Idealerweise:</p>
+<ul>
+<li>Releases sollten eindeutig gekennzeichnet sein.</li>
+</ul>
+</blockquote>
+<p>Hier möchte ich auch noch auf die <a target="_blank" rel="noopener" href="https://android.izzysoft.de/articles/named/fdroid-intro-2?lang=de#acceptance">Zusammenfassung der Aufnahmekriterien</a> von Izzy verweisen, da diese etwas einfacher verständlich sind.</p>
+<h2 id="request-for-packaging-rfp">Request for Packaging (RFP)</h2>
+<p>Wenn die App, die du veröffentlichen willst, die obigen Aufnahmekriterien erfüllt, kannst du ein “Request for Packaging” <code>RFP</code> (Anfrage für’s Paketieren) erstellen. Es ist nämlich so, dass F-Droid alle Apps, die im Store erhältlich sind, aus dem Quellcode selbst kompiliert und danach signiert. Beim Google Play Store hingegen, kompiliert und signiert der Entwickler seine App noch selbst (dies wird sich allerdings ab November 2021 ändern). Der Antrag dient dazu, dass einerseits ein Mitglied des F-Droid Teams die App überprüfen kann und andererseits aus den Angaben eine Metadaten-Datei zu der App erstellt werden kann. Diese Metadaten-Datei wird später für das Erstellen der App benötigt.</p>
+<p>Für ein <code>RFP</code> muss im Repo “Request for Packaging” ein neues <a target="_blank" rel="noopener" href="https://gitlab.com/fdroid/rfp/-/issues">Issue</a> eröffnet werden. Dazu muss die vorhandene Vorlage vollständig ausgefüllt werden.</p>
+<p><img src="request.png" /></p>
+<p>Nachdem der <code>RFP</code> gespeichert wurde, kommt binnen Stunden der F-Droid Bot vorbei und prüft die Angaben. Dazu durchkämmt er den Quellcode der App und teilt seine Ergebnisse als Beitrag im eröffneten Issue.</p>
+<p><img src="fdroid_bot.png" /></p>
+<p>Falls es Probleme gibt, sind diese im Bericht vom F-Droid Bot zu sehen. Nachdem der Bot seine Arbeit verrichtet hat, setzt sich ein freundliches Teammitglied von F-Droid mit dir in Verbindung und hilft allfällige Probleme zu beheben und beantwortet sehr schnell Fragen.</p>
+<p>Der ganze Verlauf zum <a target="_blank" rel="noopener" href="https://gitlab.com/fdroid/rfp/-/issues/1680">Issue #1680</a> meiner App kann natürlich eingesehen werden.</p>
+<p><strong>Tipp:</strong> Damit du zukünftig die Beschreibungen und Screenshots deiner App einfach selbst ändern kannst, solltest du von Beginn an die <a target="_blank" rel="noopener" href="https://gitlab.com/snippets/1895688">Fastlane</a> Struktur in deinem Projekt pflegen.</p>
+<h2 id="die-metadaten-datei">Die Metadaten-Datei</h2>
+<p>Bei der Metadaten-Datei handelt es sich um eine <code>yml</code> Datei, die wie der Name schon sagt Metainformation wie Autor und Lizenz zu der App enthält. Der Build-Server von F-Droid versucht in jedem Build-Zyklus für jede Metadaten-Datei die entsprechende App zu erstellen, falls es eine neue Version gibt.</p>
+<pre><code>Categories:
+  - Sports &amp; Health
+License: MIT
+AuthorName: MrReSc
+SourceCode: https://github.com/MrReSc/Headi
+IssueTracker: https://github.com/MrReSc/Headi/issues
+Translation: https://crwd.in/headi
+Changelog: https://github.com/MrReSc/Headi/releases
+
+AutoName: Headi
+
+RepoType: git
+Repo: https://github.com/MrReSc/Headi
+
+Builds:
+  - versionName: 1.9.0-beta
+    versionCode: 190
+    commit: 1.9.0-beta
+    subdir: app
+    gradle:
+      - yes
+
+...
+
+AutoUpdateMode: Version %v
+UpdateCheckMode: Tags
+CurrentVersion: 1.10.2-beta
+CurrentVersionCode: 1102
+</code></pre>
+<p>Sind allfällige Probleme behoben und alle Daten vorhanden, erstellt ein Teammitglied von F-Droid die Metadaten-Datei zu deiner App. Dabei wird auch geprüft, ob die App erstellt werden kann und sie wird auf einem Gerät getestet.</p>
+<p>Im <a target="_blank" rel="noopener" href="https://gitlab.com/fdroid/fdroiddata/-/merge_requests/8684">merge request #8684</a> ist schön zu sehen, was im Hintergrund passiert ist:</p>
+<ol type="1">
+<li>Ein merge request für die <a target="_blank" rel="noopener" href="https://gitlab.com/fdroid/fdroiddata/-/merge_requests/8684/diffs">Metadaten-Datei</a> wurde eröffnet.</li>
+<li>Der F-Droid Bot lief nochmals durch.</li>
+<li>Das Teammitglied von F-Droid hat die <a target="_blank" rel="noopener" href="https://gitlab.com/fdroid/fdroiddata/-/merge_requests/8684#note_539399574">verwendeten Bibliotheken</a> und die benötigten Berechtigungen überprüft.</li>
+<li>Die App wurde auf einem Gerät getestet. Auch wurde überprüft, ob die App verdächtigen <a target="_blank" rel="noopener" href="https://gitlab.com/fdroid/fdroiddata/-/merge_requests/8684#note_539406967">Netzwerkverkehr</a> hat.</li>
+</ol>
+<p>Sobald die Metadaten-Datei in das <a target="_blank" rel="noopener" href="https://gitlab.com/fdroid/fdroiddata">Data Repo</a> gemerged wurde, wird die App beim nächsten Build-Zyklus erstellt und in den Index aufgenommen.</p>
+<p>Wie man bei diesem transparenten Prozess sehr gut sieht, wird jede App sehr genau überprüft. Schadsoftware wird es hier schwer haben.</p>
+<h2 id="erstellen-und-veröffentlichen-der-app">Erstellen und veröffentlichen der App</h2>
+<p>Nun wartet man natürlich ungeduldig bis die eigene App im F-Droid Store erscheint. Um zu verstehen, wie der Prozess funktioniert, gibt es ein <a target="_blank" rel="noopener" href="https://gitlab.com/fdroid/wiki/-/wikis/FAQ#how-long-does-it-take-for-my-app-to-show-up-on-website-and-client">FAQ</a> das die dringendsten Fragen beantwortet. Im Folgenden die zwei wichtigsten Fragen und Antworten von mir frei übersetzt.</p>
+<p><strong>Wie lange dauert es bis meine App auf der Website und im Client angezeigt wird?</strong></p>
+<p>Die <code>apk</code> muss zuerst auf dem Build-Server gebaut, dann signiert (manueller Schritt) und zuletzt muss ein neuer Index erstellt und veröffentlicht werden.</p>
+<ul>
+<li>ein Build-Zyklus dauert derzeit ca. 36 Stunden</li>
+<li>das manuelle Signieren erfolgt danach</li>
+<li>der nächste Build-Zyklus startet nach dem Signieren</li>
+</ul>
+<p>Wenn man also Glück hat, dauert es 2 Tage. Wenn man nicht so viel Glück hat (merge geschah eine Minute nach dem Start des Build-Zyklus), dauert es 4 Tage. Wenn man sehr viel Pech hat, kommt Murphy zwischendurch mit einigen Problemen… Also bitte keine Panik, bevor 5 Tage vergangen sind 😉.</p>
+<p><strong>Kann ich den aktuellen Build-Status sehen?</strong></p>
+<p>Sicher, dafür gibt es den <a target="_blank" rel="noopener" href="https://monitor.f-droid.org/builds">F-Droid Monitor</a>, in dem man den aktuellen (<a target="_blank" rel="noopener" href="https://monitor.f-droid.org/builds/running">running</a>) und den letzten abgeschlossenen (<a target="_blank" rel="noopener" href="https://monitor.f-droid.org/builds/build">build</a>) Build-Zyklus sowie die deaktivierten (<a target="_blank" rel="noopener" href="https://monitor.f-droid.org/builds/disabled">Disabled builds</a>) Builds und mehr sehen kann. Historische Builds können in den <a target="_blank" rel="noopener" href="https://f-droid.org/wiki/index.php?title=Special:RecentChanges&amp;hidebots=0&amp;days=30&amp;limit=500">Build-Aktivitätsprotokollen</a> gefunden werden.</p>
+<p>Zusätzlich gibt es noch die App <a target="_blank" rel="noopener" href="https://f-droid.org/de/packages/de.storchp.fdroidbuildstatus/">F-Droid Build Status</a>, die einen sogar benachrichtigt, sobald ein neuer Build verfügbar ist.</p>
+<h2 id="updates">Updates</h2>
+<p>In regelmässigen Abständen wird von der F-Droid <a target="_blank" rel="noopener" href="https://de.wikipedia.org/wiki/Kontinuierliche_Integration">CI</a> <code>checkupdates</code> anhand der Information in der Metadaten-Datei das Quell-Repo auf Updates überprüft. Wenn die Quelle ein <code>git</code> Repo ist, wird überprüft, ob ein neuer <code>tag</code> vorhanden ist. Falls ja, wird die neue Version in der Metadaten-Datei geschrieben und im nächsten Build-Zyklus verwendet.</p>
+<h2 id="fazit">Fazit</h2>
+<p>Ich finde, Entwickler müssten schneller einfachere Anleitungen für den Veröffentlichungsprozess finden. In der Dokumentation wird gesagt, der schnellste Weg sei ein merge request ins <code>fdroiddata</code> Repo. Das kann so auch stimmen, aber wenn man sich den <a target="_blank" rel="noopener" href="https://f-droid.org/de/docs/Submitting_to_F-Droid_Quick_Start_Guide/">F-Droid Quick Start Guide</a> anschaut, überlegt man es sich nochmals.</p>
+<p>Zu Testzwecken habe ich auch versucht, mit <a target="_blank" rel="noopener" href="https://f-droid.org/de/repomaker/">Repomaker</a> mein eigenes Repo auf GitHub zu hosten. Leider hat das auch nicht geklappt. Zuerst startet das Flatpak nicht und der push ins Repo funktioniert irgendwie auch nicht. Bei dem <a target="_blank" rel="noopener" href="https://gitlab.com/fdroid/repomaker">Projekt</a> scheint nicht mehr viel zu laufen, auch wurde es zwischenzeitlich mal eingestellt. Die Idee ist wirklich nett, und die Bedienung ist auch wirklich einfach, aber wenn es nicht funktioniert, bringt alles nichts. Falls jemand Lust hat bei diesem Projekt zu helfen, sie würden sich sicher freuen.</p>
+<p>Als ich erneut einen Anlauf nahm und einen <code>RFP</code> eröffnet habe, war ich hellauf begeistert wie einfach und unkompliziert es funktionieren kann. Ich hoffe, mit diesem Artikel auch einen kleinen Beitrag zum Verständnis der Prozesse bei F-Droid leisten zu können.</p>

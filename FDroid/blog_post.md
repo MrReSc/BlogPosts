@@ -1,6 +1,6 @@
 # Wie du eine App bei F-Droid veröffentlichst
 
-In meinem [letzten Artikel]() habe ich kurz meine erste Android-App [Headi](https://f-droid.org/de/packages/com.headi.app/) vorgestellt. Als ich im Redaktionsteam von meiner App erzählte, hat mich Ulf (ub1x) auf die spannenden Artikel von [Izzy](https://www.izzysoft.de/izzy), einem Maintainer von F-Droid und Betreiber des [IzzyOnDroid](https://apt.izzysoft.de/fdroid/) [Repositorium](https://de.wikipedia.org/wiki/Repository) (Repo), aufmerksam gemacht. In diesem Artikel möchte ich kurz meine Erfahrung mit dem Veröffentlichen meiner App und einen Leitfaden dazu mit euch teilen.
+In meinem [letzten Artikel](https://gnulinux.ch/headi-aufruf-zum-testen) habe ich kurz meine erste Android-App [Headi](https://f-droid.org/de/packages/com.headi.app/) vorgestellt. Als ich im Redaktionsteam von meiner App erzählte, hat mich Ulf (ub1x) auf die spannenden Artikel von [Izzy](https://www.izzysoft.de/izzy), einem Maintainer von F-Droid und Betreiber des [IzzyOnDroid](https://apt.izzysoft.de/fdroid/) [Repositorium](https://de.wikipedia.org/wiki/Repository) (Repo), aufmerksam gemacht. In diesem Artikel möchte ich kurz meine Erfahrung mit dem Veröffentlichen meiner App und einen Leitfaden dazu mit euch teilen.
 
 ![](fdroid.png)
 
