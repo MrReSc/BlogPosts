@@ -1,6 +1,6 @@
 # Wie du eine App bei F-Droid veröffentlichst
 
-In meinem [letzten Artikel]() habe ich kurz meine erste Android-App [Headi](https://f-droid.org/de/packages/com.headi.app/) vorgestellt. Als ich im Redaktionsteam von meiner App erzählte, hat mich Ulf auf die spannenden Artikel von [Izzy](https://www.izzysoft.de/izzy), ein Maintainer von F-Droid und Betreiber des [IzzyOnDroid](https://apt.izzysoft.de/fdroid/) [Repositorium](https://de.wikipedia.org/wiki/Repository) (Repo), aufmerksam gemacht. In diesem Artikel möchte ich kurz meine Erfahrung mit dem Veröffentlichen meiner App und einen Leitfaden dazu mit euch Teilen.
+In meinem [letzten Artikel]() habe ich kurz meine erste Android-App [Headi](https://f-droid.org/de/packages/com.headi.app/) vorgestellt. Als ich im Redaktionsteam von meiner App erzählte, hat mich Ulf (ub1x) auf die spannenden Artikel von [Izzy](https://www.izzysoft.de/izzy), ein Maintainer von F-Droid und Betreiber des [IzzyOnDroid](https://apt.izzysoft.de/fdroid/) [Repositorium](https://de.wikipedia.org/wiki/Repository) (Repo), aufmerksam gemacht. In diesem Artikel möchte ich kurz meine Erfahrung mit dem Veröffentlichen meiner App und einen Leitfaden dazu mit euch Teilen.
 
 ![](fdroid.png)
 
@@ -32,7 +32,7 @@ Als Erstes sollte man sicherstellen, dass die App die Veröffentlicht werden sol
 
 Hier möchte ich auch noch auf die [Zusammenfassung der Aufnahmekriterien](https://android.izzysoft.de/articles/named/fdroid-intro-2?lang=de#acceptance) von Izzy verweisen, da diese etwas einfacher Verständlich sind.
 
-## Request for Packaging
+## Request for Packaging (RFP)
 Wenn die App die du veröffentlichen willst, die obigen Aufnahmekriterien erfüllt, kannst du ein "Request for Packaging" `RFP` (Anfrage für's Paketieren) erstellen. Es ist nämlich so, dass F-Droid alle App's die im Store erhältlich sind, aus dem Quellcode selbst kompiliert und danach Signiert. Beim Google Play Store hingegen, kompiliert und signiert der Entwickler seine App selbst. Der Antrag dient dazu, dass einerseits ein Mitglied des F-Droid Teams die App überprüfen kann und andererseits aus den Angaben eine Metadaten-Datei zu der App erstellt werden kann. Diese Metadaten-Datei wird im später für das Erstellen der App benötigt.
 
 Fèr ein `RFP` muss im Repo "Request for Packaging" ein neues [Issue](https://gitlab.com/fdroid/rfp/-/issues) eröffnet werden. Dazu muss die vorhandene Vorlage vollständig ausgefüllt werden.
@@ -49,7 +49,7 @@ Der ganze Verlauf zum [Issue #1680](https://gitlab.com/fdroid/rfp/-/issues/1680)
 
 **Tipp:** Damit du zukünftig die Beschreibungen und Screenshots deiner App einfach selbst ändern kannst, sollte du von Beginn an die [Fastlane](https://gitlab.com/snippets/1895688) Struktur in deinem Projekt pflegen.
 
-## Metadaten-Datei
+## Die Metadaten-Datei
 Bei der Metadaten-Datei handelt es sich um eine `yml` Datei, die, wie der Name schon sagt, Metainformation wie Autor und Lizenz zu der App enthält. Der Build-Server von F-Droid versucht in jedem Build-Zyklus für jede Metadaten-Datei die entsprechende App zu erstellen, falls es eine neue Version gibt.
 
 ```
