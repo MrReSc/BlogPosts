@@ -4,6 +4,7 @@
     "languageToolLinter.languageTool.ignoredWordsInWorkspace": [
         "flathub",
         "flatpak",
+        "insatllation",
         "metadata",
         "size"
     ]
