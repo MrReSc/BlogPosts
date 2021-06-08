@@ -1,4 +1,4 @@
-# Firmaware updates unter GNU/Linux
+# Firmaware Updates unter GNU/Linux
 
 Seit einigen Monaten besitze ich ein neues ThinkPad, ein `P14s AMD 1st Gen`, welches Linux zertifiziert ist und ohne Betriebssystem gekauft werden kann. Leider gab es im UEFI einen nervigen Bug. Wenn das Notebook ausgeschaltet ist, wird innert wenigen Tagen der Akku geleert. Zusätzlich zu diesem Problem wurden auch noch diverse andere Bugs gemeldet, die mich persönlich aber nicht betreffen. Im Lenovo Forum gibt es einen riesigen [Thread](https://forums.lenovo.com/topic/view/27/5037674?page=1), indem die Probleme mit dem Linux verantwortlichen diskutiert werden. Es ist schön zu sehen, dass sich bei Lenovo jemand um die anliegend er Linux Nutzer kümmert.
 
@@ -18,7 +18,7 @@ Inzwischen sind viele grosse Hersteller beim `LVFS` vertreten. Unter anderen Len
 
 Wenn dein Gerät beim `LVFS` [gelistet](https://fwupd.org/lvfs/devices/) ist, kannst du in der Kommandozeile mit folgenden Befehlen überprüfen ob Updates vorhanden sind und diese allenfalls installieren.
 
-```bash
+```
 # Alle erkannten Geräte anzeigen
 fwupdmgr get-devices
 
