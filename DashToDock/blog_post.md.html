@@ -1,0 +1,22 @@
+<h1 id="dash-to-dock-mit-gnome-40-nutzen">Dash to Dock mit GNOME 40 nutzen</h1>
+<p>Die beliebte GNOME Shell Erweiterung <a target="_blank" rel="noopener" href="https://micheleg.github.io/dash-to-dock/">Dash to Dock</a> funktioniert bekanntlicher Weise noch nicht auf GNOME 40. Folgend möchte ich euch zeigen, wie ihr die Erweiterung trotzdem schon auf GNOME 40 nutzen könnt.</p>
+<p><em>Hinweis: In dieser Anleitung wird <code>Dash to Dock</code> aus eine Quelle kompiliert, die noch nicht stabil ist.</em></p>
+<p><img src="dash_to_dock_1.png" /></p>
+<p>Seit einigen Monaten arbeitet der Entwickler <a target="_blank" rel="noopener" href="https://github.com/ewlsh">Evan Welsh</a> an der Portierung der Erweiterung auf GNOME 40. Im Pull Request <a target="_blank" rel="noopener" href="https://github.com/micheleg/dash-to-dock/pull/1402">#1402</a> wird auch schon seit Ende März 2021 rege diskutiert und Bugs gemeldet. Ich persönlich nutzte die Erweiterung schon seit anfangs April ohne Probleme, allerdings auch nur mit den Standradeinstellungen.</p>
+<h2 id="kompilieren-und-installieren">Kompilieren und installieren</h2>
+<h3 id="abhängigkeiten">Abhängigkeiten</h3>
+<p>Um das Stylesheet zu kompilieren, benötigen man eine Implementierung von <a target="_blank" rel="noopener" href="https://de.wikipedia.org/wiki/Sass_(Stylesheet-Sprache)">SASS</a>. <code>Dash to Dock</code> unterstützt <code>dart-sass</code> (<code>sass</code>), <code>sassc</code>, und <code>ruby-sass</code>. Jede Distribution sollte mindestens eine dieser Implementierungen haben. Der Entwickler empfiehlt die Verwendung von <code>dart-sass</code> (<code>sass</code>) oder <code>sassc</code> gegenüber <code>ruby-sass</code>, da <code>ruby-sass</code> veraltet sei.</p>
+<pre><code>sudo dnf install sassc</code></pre>
+<p>Standardmässig versucht <code>Dash to Dock</code>, mit <code>dart-sass</code> zu bauen. Falls man nicht <code>dart-sass</code> verwendet, muss man die SASS-Umgebungsvariable anpassen.</p>
+<pre><code>export SASS=sassc
+# oder...
+export SASS=ruby</code></pre>
+<h3 id="kompilieren">Kompilieren</h3>
+<p>Nun kann man die Quelle klonen und mit der beiliegenden <code>make</code> Datei kompilieren und installieren.</p>
+<pre><code>git clone https://github.com/ewlsh/dash-to-dock.git
+cd dash-to-dock/
+git checkout -b ewlsh/gnome-40
+make
+make install</code></pre>
+<p>Nach dem Installieren muss man sich von der aktuellen Sitzung abmelden und wieder anmelden. Nach dem Anmelden kann <code>Dash to Dock</code> in der Applikation <code>Erweiterung</code> aktiviert, konfiguriert oder wieder entfernt werden.</p>
+<p><img src="installed.png" /></p>

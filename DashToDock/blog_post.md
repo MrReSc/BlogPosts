@@ -1,12 +1,12 @@
-# Dash to Dock mit GNOME 40
+# Dash to Dock mit GNOME 40 nutzen
 
-Die beliebte GNOME Shell Erweiterung [Dash to Dock](https://micheleg.github.io/dash-to-dock/) funktioniert bekanntlicher Weise noch nicht auf GNOME 40. Folgend möchte ich euch zeigen, wie ihr die Erweiterung trotzdem auf GNOME 40 nutzen könnt. 
+Die beliebte GNOME Shell Erweiterung [Dash to Dock](https://micheleg.github.io/dash-to-dock/) funktioniert bekanntlicher Weise noch nicht auf GNOME 40. Folgend möchte ich euch zeigen, wie ihr die Erweiterung trotzdem schon auf GNOME 40 nutzen könnt. 
 
 *Hinweis: In dieser Anleitung wird `Dash to Dock` aus eine Quelle kompiliert, die noch nicht stabil ist.*
 
 ![](dash_to_dock_1.png)
 
-Seit einigen Monaten arbeitet der Entwickler [Evan Welsh](https://github.com/ewlsh) an der Portierung der Erweiterung auf GNOME 40. Im Pull Request [#1402](https://github.com/micheleg/dash-to-dock/pull/1402) wird auch schon seit Ende März 2021 rege diskutiert und Bugs gemeldet. Ich persönlich nutzte die Erweiterung schon seit anfangs April ohne Probleme, allerdings auch nur mit Standradeinstellungen.
+Seit einigen Monaten arbeitet der Entwickler [Evan Welsh](https://github.com/ewlsh) an der Portierung der Erweiterung auf GNOME 40. Im Pull Request [#1402](https://github.com/micheleg/dash-to-dock/pull/1402) wird auch schon seit Ende März 2021 rege diskutiert und Bugs gemeldet. Ich persönlich nutzte die Erweiterung schon seit anfangs April ohne Probleme, allerdings auch nur mit den Standradeinstellungen.
 
 ## Kompilieren und installieren
  
@@ -30,14 +30,11 @@ Nun kann man die Quelle klonen und mit der beiliegenden `make` Datei kompilieren
 
 ```
 git clone https://github.com/ewlsh/dash-to-dock.git
+cd dash-to-dock/
 git checkout -b ewlsh/gnome-40
 make
 make install
 ```
-Nach dem Installieren muss man sich von der aktuellen Sitzung abmelden und wieder anmelden. Nach dem Anmelden kann `Dash to Dock` in der Applikation `Erweiterung` aktiviert und konfiguriert werden.
+Nach dem Installieren muss man sich von der aktuellen Sitzung abmelden und wieder anmelden. Nach dem Anmelden kann `Dash to Dock` in der Applikation `Erweiterung` aktiviert, konfiguriert oder wieder entfernt werden.
 
 ![](installed.png)
-
-
-
-
