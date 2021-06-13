@@ -16,6 +16,7 @@ The blog posts are available on the website [https://gnulinux.ch/](https://gnuli
 * [Video Downloader - Einfaches Frontend zu youtube-dl](https://gnulinux.ch/video-downloader-einfaches-frontend-zu-youtube-dl)
 * [Headi - Aufruf zum Testen](https://gnulinux.ch/headi-aufruf-zum-testen)
 * [Wie du eine App bei F-Droid veröffentlichst](https://gnulinux.ch/wie-du-eine-app-bei-f-droid-veroeffentlichst)
+* [Firmware Updates unter GNU/Linux](https://gnulinux.ch/firmware-updates-unter-gnu-linux)
 
 ## Convert to HTML
 By executing the script `md_to_html.sh` all markdown files (`*.md`) in this repository are converted to HTML.
