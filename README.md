@@ -3,6 +3,8 @@ Here are all blogposts that have no code repository.
 The blog posts are available on the website [https://gnulinux.ch/](https://gnulinux.ch/).
 
 ## Index
+* [Exposure Notification Monitor mit EPS32](https://gnulinux.ch/exposure-notification-monitor-mit-eps32)
+* [Raumklima messen und aufzeichen mit ESP32 und InfluxDB](https://gnulinux.ch/raumklima-messen-und-aufzeichen-mit-esp32-und-influxdb)
 * [GitHub Repositorys zum selbst gehostetem Gitea spiegeln](https://gnulinux.ch/github-repositorys-zum-selbst-gehostetem-gitea-spiegeln)
 * [Manjaro mit Gnome Boxes ausprobiert](https://gnulinux.ch/manjaro-in-gnome-boxes-ausprobiert)
 * [Gedit Style erstellen](https://gnulinux.ch/gedit-style-erstellen)
