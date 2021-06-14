@@ -19,6 +19,7 @@ The blog posts are available on the website [https://gnulinux.ch/](https://gnuli
 * [Headi - Aufruf zum Testen](https://gnulinux.ch/headi-aufruf-zum-testen)
 * [Wie du eine App bei F-Droid veröffentlichst](https://gnulinux.ch/wie-du-eine-app-bei-f-droid-veroeffentlichst)
 * [Firmware Updates unter GNU/Linux](https://gnulinux.ch/firmware-updates-unter-gnu-linux)
+* [Dash to Dock mit GNOME 40 nutzen](https://gnulinux.ch/dash-to-dock-mit-gnome-40-nutzen)
 
 ## Convert to HTML
 By executing the script `md_to_html.sh` all markdown files (`*.md`) in this repository are converted to HTML.
