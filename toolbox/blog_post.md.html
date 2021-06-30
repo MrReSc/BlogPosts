@@ -1,0 +1,40 @@
+<h1 id="eine-kurze-einführung-in-toolbox-unter-fedora">Eine kurze Einführung in Toolbox unter Fedora</h1>
+<p><a target="_blank" rel="noopener" href="https://github.com/containers/toolbox">toolbox</a> ermöglicht es dir, deine Entwicklungsumgebungen in Containern zu verwalten, ohne Root-Rechte zu benötigen oder Volumes manuell anzuhängen. Sie erstellt einen Container, in dem du deine eigenen CLI-Tools installieren kannst, ohne sie auf dem Basissystem selbst zu installieren. Du kannst <code>toolbox</code> auch nutzen, wenn du keine Root-Rechte hast oder keine Programme direkt installieren kannst. Es baut auf Podman und anderen Standard-Container-Technologien von OCI auf. Dieser Artikel gibt dir eine kurze Einführung in die <code>toolbox</code> und was sie macht.</p>
+<p><img src="logo.png" /></p>
+<h2 id="installation">Installation</h2>
+<p>Bei meiner Installation von Fedora 34 ist <code>toolbox</code> bereits installiert. Falls das bei dir nicht der Fall ist, kann mit dem Befehl <code>sudo dnf install toolbox</code> die Software installiert werden.</p>
+<h2 id="toolboxen-erstellen">Toolboxen erstellen</h2>
+<p>Öffne dein Terminal und führe <code>toolbox enter</code> aus. Das Tool wird automatisch die Erlaubnis anfordern, das neueste Image herunterzuladen, deinen ersten Container zu erstellen und deine Shell in diesem Container zu platzieren.</p>
+<pre><code>remo@fedora ~ $ toolbox enter
+No toolbox containers found. Create now? [y/N] y
+Image required to create toolbox container.
+Download registry.fedoraproject.org/fedora-toolbox:34 (500MB)? [y/N]: y
+remo@toolbox ~ $ </code></pre>
+<p>Wie man nun am command prompt sieht, befinde ich mich bereits in der <code>toolbox</code>.</p>
+<h2 id="beispiel">Beispiel</h2>
+<p>Ich möchte euch kurz zeigen, wie man die GNOME Shell Erweiterung <code>Dash to Dock</code> aus einem Entwicklungszweig selbst kompiliert, dazu aber nicht die benötigten Werkzeuge auf seinem System installieren muss.</p>
+<p>In der <code>toolbox</code> hat man normalen Zugriff auf sein Dateisystem. Als Erstes klonen wir nun den Entwicklungszweig in das <code>Download</code> Verzeichnis und wechseln danach direkt in das <code>dash-to-dock</code> Verzeichnis.</p>
+<pre><code>remo@toolbox ~ $ cd Downloads/
+remo@toolbox ~/Downloads $ git clone https://github.com/ewlsh/dash-to-dock.git
+remo@toolbox ~/Downloads $ cd dash-to-dock</code></pre>
+<p>Als Nächstes müssen wir die benötigten Werkzeuge in der <code>toolbox</code> installieren. Dazu kann wie gewohnt der Paketmanager <code>dnf</code> benutzt werden. Ein Root-Passwort wird nicht benötigt.</p>
+<pre><code>sudo dnf install make sassc gettext</code></pre>
+<p>Nun können wird <code>dash-to-dock</code> kompilieren und installieren.</p>
+<pre><code>remo@toolbox ~/Downloads/dash-to-dock $ make
+remo@toolbox ~/Downloads/dash-to-dock $ make install</code></pre>
+<p>GNOME Shell Erweiterung ist nun installiert. Nach einem An- und Abmelden kann die Erweiterung aktiviert werden.</p>
+<h2 id="aufräumen">Aufräumen</h2>
+<p>Falls das kompilieren nur eine einmalige Sache war, kann die entsprechende <code>toolbox</code> wieder gelöscht werden. Dazu verlässt man zuerst die <code>toolbox</code> mit dem Befehl <code>exit</code>. Mit <code>toolbox list</code> können alle Container angezeigt werden. So findet man den zu Löschenden am einfachsten.</p>
+<pre><code>remo@toolbox ~/Downloads/dash-to-dock $ exit
+logout
+remo@fedora ~ $ toolbox list
+IMAGE ID      IMAGE NAME                                    CREATED
+d8a734db8c5c  registry.fedoraproject.org/fedora-toolbox:34  21 hours ago
+
+CONTAINER ID  CONTAINER NAME     CREATED         STATUS   IMAGE NAME
+28aa31a30744  fedora-toolbox-34  19 minutes ago  running  registry.fedoraproject.org/fedora-toolbox:34
+remo@fedora ~ $ toolbox rm -f fedora-toolbox-34</code></pre>
+<h2 id="weitere-befehle">Weitere Befehle</h2>
+<p>Wer sich ein wenig mit Container auskennt, dem kommen alle oben beschriebenen Befehle sehr bekannt vor. In der <a target="_blank" rel="noopener" href="https://docs.fedoraproject.org/en-US/fedora-silverblue/toolbox/">Dokumentation</a> von Fedora Silverblue findet man viele weitere Befehle.</p>
+<h2 id="quellen">Quellen</h2>
+<p><a target="_blank" rel="noopener" href="https://fedoramagazine.org/a-quick-introduction-to-toolbox-on-fedora/">https://fedoramagazine.org/a-quick-introduction-to-toolbox-on-fedora/</a></p>
