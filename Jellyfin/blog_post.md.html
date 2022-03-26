@@ -1,0 +1,34 @@
+<h1 id="jellyfin---selfhosted-media-server">Jellyfin - Selfhosted Media Server</h1>
+<p>Schon vor einiger Zeit habe ich alle meine CD’s, DVD’s und Blu-ray’s <a target="_blank" rel="noopener" href="https://de.wikipedia.org/wiki/Rippen">gerippt</a> und die Silberscheiben aus Platzgründen entsorgt. Bis vor ca. 6 Monaten nutze ich ein Intel NUC mit einer <a target="_blank" rel="noopener" href="https://libreelec.tv/">LibreElec</a> Installation, um diese Medien von meinem NAS abzuspielen. Das hat auch immer wunderbar funktioniert. Parallel zu Kodi nutzte ich auch immer noch einen <a target="_blank" rel="noopener" href="https://de.wikipedia.org/wiki/Chromecast">Chromecast</a>, um von verschiedenen Quellen auf meinen TV streamen zu können. Nun sind wir umgezogen und ich wollte keine unnötigen Geräte mehr haben. Also habe ich mich nach eine Lösung umgeschaut, um die Medien von meinem NAS via Chromecast abspielen zu können und bin mit <a target="_blank" rel="noopener" href="https://jellyfin.org/">Jellyfin</a> fündig geworden. Folgend möchte euch Jellyfin kurz vorstellen.</p>
+<p><img src="./Jelly-banner.png" /></p>
+<p>Jellyfin ist eine Multimedia-Anwendung, um digitale Mediendateien zu organisieren, zu verwalten und auf vernetzte Geräten abzuspielen. Jellyfin besteht zum einen aus einer Server-Anwendung, die auf einem Rechner mit Microsoft Windows, macOS, GNU/Linux oder in einem Docker-Container installiert ist. Des Weiteren wird eine Anwendung benötigt, die auf einem <a target="_blank" rel="noopener" href="https://jellyfin.org/clients/">Client-Gerät</a> wie einem Smartphone, Tablet, Smart-TV, Streaming Media Player, einer Spielekonsole oder in einem Webbrowser läuft. Jellyfin kann auch Medien an DLNA- und Chromecast-fähige Geräte streamen. Es ist eine freie und quelloffene (GPLv2) Software-Abspaltung von <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Emby">Emby</a>. Jellyfin ist in <code>C#</code> geschrieben und basiert <code>.NET Core</code>.</p>
+<p><img src="./home_full.png" /></p>
+<p>Jellyfin hat eine Benutzerverwaltung und dank der Client-Server-Architektur können problemlos mehrere Clients gleichzeitig Medien streamen. Jellyfin ist erweiterbar, und es gibt optionale Plugins von Drittanbietern, die zusätzliche Funktionen bieten. Das Projekt unterhält ein offizielles Repository, jedoch müssen Plugins nicht im offiziellen Repository gehostet werden, um installierbar zu sein.</p>
+<p><img src="./movie_full.png" /></p>
+<h2 id="installation">Installation</h2>
+<p>Wer mich schon ein wenig kennt, der kann erahnen, dass der Server bei mir als Docker-Container läuft. Nachstehend findet ihr noch meine <code>docker-compose.yml</code> Datei für einen schnellen Start.</p>
+<pre><code>version: &quot;2.1&quot;
+services:
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin
+    container_name: Jellyfin
+    mem_limit: 3072m
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Zurich
+    volumes:
+      - ./config:/config
+      - /volume1/Media/Serien/Watched:/data/tvshows
+      - /volume1/Media/Filme/Watched:/data/movies
+      - /volume1/Media/Musik:/data/music
+    ports:
+      - 8096:8096
+      - 7359:7359/udp #Allows clients to discover Jellyfin on the local network.
+    devices:
+      - /dev/dri:/dev/dri #Intel GPU for hardware accelerated
+    restart: always</code></pre>
+<p>Nach einem <code>docker-compose up -d</code> kann der Webclient unter <code>http://host-ip:8096/</code> im Browser aufgerufen werden.</p>
+<p>Es gibt auch einen <a target="_blank" rel="noopener" href="https://demo.jellyfin.org/stable">Demo-Server</a>, auf dem man alles ausprobieren kann. Der Benutzername lautet <code>demo</code> und es wird kein Passwort benötigt.</p>
+<p>Quelle: <a target="_blank" rel="noopener" href="https://jellyfin.org/">https://jellyfin.org/</a></p>
+<p>Quelle: <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Jellyfin">https://en.wikipedia.org/wiki/Jellyfin</a></p>
