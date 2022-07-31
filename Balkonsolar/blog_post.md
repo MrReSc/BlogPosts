@@ -6,7 +6,7 @@ Ganz im Sinne der [Hackethik](https://www.ccc.de/de/hackerethik), Misstraue Auto
 
 ![](IMG_20220604_161241.jpg)
 
-## Was ist eine Plug-&-Play-Photovoltaikanlagen?
+## Was ist eine Plug-&-Play-Photovoltaikanlage?
 Eine Plug-&-Play-Photovoltaikanlage, dies ist die offizielle Bezeichnung des Eidgenössischen Starkstrominspektorat (ETSI), ist eine steckbare Photovoltaikanlage zur dezentralen Energieeinspeisung in das elektrische Netz. Im Internet findet sich auch häufig die Bezeichnung Balkonsolaranlage oder Guerilla-Solaranlage. Diese Anlagen sind netzgekoppelt, wie die allermeisten Photovoltaikanlage, und können nicht als Inselanlage, z.B. für Notstrom, betrieben werden. Grundsätzlich könnte man seine Balkonsolaranlage auch mit einem Stromspeicher betreiben. Die Wirtschaftlichkeit ist dann aber sehr fragwürdig.
 
 ## Normative Anforderungen
@@ -31,7 +31,7 @@ Aus Sicht der Nachhaltigkeit war es mir wichtig, so viele Secondhand Komponenten
 Im Vergleich zu komplett fertigen Balkonsolaranlagen aus dem Fachhandel, könnte ich meine Komponenten sehr günstig erstehen.
 
 ## Installation
-Da ich eine elektrotechnische Ausbildung abgeschlossen habe, bin ich imstande solche Installationen selbst zu machen. Alle Installationen am Stromnetz oder bei hohen Spannungen an der Gleichstromseite sollten immer von Fachpersonal gemacht werden. Es besteht Lebensgefahr! Wenn keine Fachkenntnisse vorhanden sind, sollte eine steck-fertige Anlage aus dem Fachhandel gekauft werden.
+Da ich eine elektrotechnische Ausbildung abgeschlossen habe, bin ich imstande solche Installationen selbst zu machen. Alle Installationen am Stromnetz oder bei hohen Spannungen an der Gleichstromseite sollten immer von Fachpersonal gemacht werden. Es besteht Lebensgefahr! Wenn keine Fachkenntnisse vorhanden sind, sollte eine steckerfertige Anlage aus dem Fachhandel gekauft werden.
 
 Auf der Südseite unseres Hauses haben wir ein Velohäuschen das fast den ganzen Tag gut besonnt ist. Ich habe mich dazu entschieden, die Solarmodule flach auf das Dach zu legen, da dies mit sehr wenig Aufwand verbunden war. Das Dach hat eine Neigung von ca. 5°, damit das Regenwasser abfliessen kann. Da es leider kein Stromanschluss im Velohäuschen gab, mussten wir noch Installationsrohre verlegen.
 
@@ -51,6 +51,6 @@ Natürlich interessieren mich aber die Leistungsdaten der PV-Anlage. Als günsti
 ## Fazit
 Bis Dato haben wir 48 Betriebstage und durchschnittlich 3.35 kWh pro Tag produziert. Das deckt ca. 30 bis 50 % von unsrem Tagesbedarf. Während der Sonnenstunden wird die Grundlast von ca. 150 W problemlos gedeckt. Während den Mittags- und Nachmittagsstunden bei moderaten Temperaturen werden die 600 W locker erreicht. Wir haben unser Verhalten dahin angepasst, dass wir zu den Spitzenleistungszeiten die Grossverbraucher wie die Waschmaschine oder Geschirrwaschautomat einschalten. So kann der Eigenverbrauch optimiert werden. Dadurch dass ich drei Solarmodule verwende und eine recht grosse Fläche habe, ist der Ertrag auch bei diffusen Lichtverhältnissen ziemlich gut. Das bring bei schlechten Wetterverhältnissen ein Vorteil.
 
-Als Hausbesitzer, sofern es die finanziellen Verhältnisse zulassen, sollte eigentlich eine grosse Photovoltaikanlage auf dem Dach installiert werden. Und zwar auf so viel Fläche wie möglich. Ist dies aber nicht möglich, ist eine Balkonsolaranlage ein günstiger und auch für Mieter machbarer Beitrag zur Energiewende. Ich bin der Meinung, dass jede kWh aus erneuerbaren Energien zählt!
+Da ich alles selbst zusammengebaut habe und sehr günstig an meine Komponenten gekommen bin, rechne ich mit einer Amortisation nach bereits zwei bis drei Jahren.
 
-Da ich alles selbst zusammengebaut habe und sehr günstig an meine Komponenten gekommen bin, rechne ich mit einer Amortisation nach bereit zwei bis drei Jahren.
+Als Hausbesitzer, sofern es die finanziellen Verhältnisse zulassen, sollte eigentlich eine grosse Photovoltaikanlage auf dem Dach installiert werden. Und zwar auf so viel Fläche wie möglich. Ist dies aber nicht möglich, ist eine Balkonsolaranlage ein günstiger und auch für Mieter machbarer Beitrag zur Energiewende. Ich bin der Meinung, dass jede kWh aus erneuerbaren Energien zählt!
