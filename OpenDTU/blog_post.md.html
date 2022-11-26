@@ -1,0 +1,47 @@
+<h1 id="opendtu---ertragsüberwachung-ohne-cloud">OpenDTU - Ertragsüberwachung ohne Cloud</h1>
+<p>Vor einiger Zeit habe ich meine <a target="_blank" rel="noopener" href="https://gnulinux.ch/plug-play-photovoltaikanlagen">Plug-&amp;-Play-Photovoltaikanlage</a> vorgestellt. Aus verschiedenen Gründen habe ich mich für einen anderen Wechselrichter entschieden, hauptsächlich aber um zwei separate MPPT zu haben. Ich habe einen HM-1200 von Hoymiles gekauft. Die Einspeiseleistung muss auf 600 W begrenzt werden, um den normativen Anforderungen gerecht zu werden. Dazu wird aber eine Datenübertragungseinheiten (DTU) vom Hersteller benötigt. Diese kostet je nach Model so viel ein Wechselrichter und für die Ertragsüberwachung ist man von der Cloud des Herstellers abhängig. Bei der Suche nach einer Alternative bin ich auf das Projekt <a target="_blank" rel="noopener" href="https://github.com/tbnobody/OpenDTU">OpenDTU</a> gestossen. Ich möchte euch das Projekt kurz vorstellen. Eine Installationsanleitung findet ihr auf der <a target="_blank" rel="noopener" href="https://github.com/tbnobody/OpenDTU#flashing-and-starting-up">Projektseite</a> oder in der c’t 24/2022 S. 158.</p>
+<p><img src="open_dtu.png" /></p>
+<p>Da das Projekt noch sehr jung ist, gibt es häufig Updates. Es gibt auch noch keine stabile Version. Man installiert immer den <code>main</code> branch. Allerdings läuft der ESP32 bei mir seit zwei Wochen durch und das absolut stabil.</p>
+<h2 id="technologie">Technologie</h2>
+<p>Die Software steht unter der <code>GNU General Public License v2.0</code>. Der Mikrocontroller Teil wurde mit dem <code>PlatformIO</code> Framework erstellt. Die Web-Applikation basiert auf <code>Vue.js</code> und ist in <code>TypeScript</code> geschrieben.</p>
+<p>Das Kommunikationsprotokoll wurde “reverse engineered”, da es keine öffentliche Dokumentation gibt.</p>
+<h2 id="hardware">Hardware</h2>
+<p>OpenDTU läuft einem ESP32 und benötigt ein NRF24L01+ Funktmodul. Den ESP32 hatte ich noch in einer Bastelkiste und das Funkmodul habe ich für 2.90.- CHF gekauft. Ich habe beides auf eine Lochrasterplatine gelötet und ich warte noch auf ein 3D gedrucktes Gehäuse. Genauere Beschreibung zur <a target="_blank" rel="noopener" href="https://github.com/tbnobody/OpenDTU#hardware-you-need">Hardware</a> und <a target="_blank" rel="noopener" href="https://github.com/tbnobody/OpenDTU#wiring-up">Verdrahtung</a> findet ihr auf der Projektseite.</p>
+<p><img src="esp32.jpg" /></p>
+<p>Hinweis: Mit dem Schwesternprojekt <a target="_blank" rel="noopener" href="https://github.com/lumapu/ahoy">Ahoy</a> gibt es auch eine Software für den ESP8266 und für den Arduino.</p>
+<h2 id="unterstützte-wechselrichter">Unterstützte Wechselrichter</h2>
+<p>Zurzeit werden die folgenden Wechselrichter unterstützt:</p>
+<ul>
+<li>Hoymiles HM-300</li>
+<li>Hoymiles HM-350</li>
+<li>Hoymiles HM-400</li>
+<li>Hoymiles HM-600</li>
+<li>Hoymiles HM-700</li>
+<li>Hoymiles HM-800</li>
+<li>Hoymiles HM-1000</li>
+<li>Hoymiles HM-1200</li>
+<li>Hoymiles HM-1500</li>
+<li>TSUN TSOL-M350 (Firmware abhängig)</li>
+<li>TSUN TSOL-M800 (Firmware abhängig)</li>
+<li>TSUN TSOL-M1600 (Firmware abhängig)</li>
+</ul>
+<p>Sonstige Modulwechselrichter von Hoymiles nutzen einen anderen Funkstandard und womöglich auch ein anderes Protokoll. Wahrscheinlich wird es für diese in absehbarer Zeit kein Support geben.</p>
+<h2 id="funktionen">Funktionen</h2>
+<p>Auf der Projektseite gibt es eine <a target="_blank" rel="noopener" href="https://github.com/tbnobody/OpenDTU#features-for-end-users">Liste</a> mit allen Funktionen.</p>
+<ul>
+<li>Live-Daten vom Wechselrichter lesen</li>
+<li>Anzeigen des internen Ereignisprotokolls des Wechselrichters</li>
+<li>Anzeige von Wechselrichterinformationen wie Firmware-Version</li>
+<li>Anzeigen und Einstellen der Leistungsbegrenzung</li>
+<li>Funktion zum Aus- und Einschalten des Wechselrichters</li>
+<li>Multi-Wechselrichter-Unterstützung (bis zu 10)</li>
+<li>MQTT-Unterstützung (mit TLS)</li>
+<li>Home Assistant MQTT Auto Discovery Unterstützung</li>
+<li>Firmware-Upgrade über die Web-UI</li>
+<li>Prometheus API Endpunkt</li>
+</ul>
+<p>Für mich war die Möglichkeit die Leistung auf der AC Seite zu begrenzen sowie die Ertragsdaten via <code>MQTT</code> auszulesen die wichtigsten. Noch nicht aufgeführt, aber vorhanden ist auch eine <a target="_blank" rel="noopener" href="https://github.com/tbnobody/OpenDTU/blob/master/docs/Web-API.md">Web-API</a>.</p>
+<p>Erwähnenswert zur Leistungsbegrenzung ist noch, dass dies auch via <code>MQTT</code>möglich ist. Es ist denkbar, einen Nulleinspeisung zu bauen oder eine Leistungsregelung über mehrere Wechselrichter. Ich habe schon einige Ideen, was ich ausprobieren könnte :-).</p>
+<h2 id="monitoring">Monitoring</h2>
+<p>Im vorhergehenden Artikel habe ich bereits meine Ertragsüberwachung beschrieben. Da ich nun viel mehr Daten zur Verfügung habe, habe ich auch mein Grafana Dashboard angepasst.</p>
+<p><img src="grafana.png" /></p>

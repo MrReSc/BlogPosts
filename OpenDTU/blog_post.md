@@ -1,4 +1,4 @@
-# OpenDTU - Ertragsüberwachung ohne Cloud
+# OpenDTU - Ertragsüberwachung von Hoymiles Wechselrichter ohne Cloud
 
 Vor einiger Zeit habe ich meine [Plug-&-Play-Photovoltaikanlage](https://gnulinux.ch/plug-play-photovoltaikanlagen) vorgestellt. Aus verschiedenen Gründen habe ich mich für einen anderen Wechselrichter entschieden, hauptsächlich aber um zwei separate MPPT zu haben. Ich habe einen HM-1200 von Hoymiles gekauft. Die Einspeiseleistung muss auf 600 W begrenzt werden, um den normativen Anforderungen gerecht zu werden. Dazu wird aber eine Datenübertragungseinheiten (DTU) vom Hersteller benötigt. Diese kostet je nach Model so viel ein Wechselrichter und für die Ertragsüberwachung ist man von der Cloud des Herstellers abhängig. Bei der Suche nach einer Alternative bin ich auf das Projekt [OpenDTU](https://github.com/tbnobody/OpenDTU) gestossen. Ich möchte euch das Projekt kurz vorstellen. Eine Installationsanleitung findet ihr auf der [Projektseite](https://github.com/tbnobody/OpenDTU#flashing-and-starting-up) oder in der c't 24/2022 S. 158.
 
@@ -12,7 +12,7 @@ Die Software steht unter der `GNU General Public License v2.0`. Der Mikrocontrol
 Das Kommunikationsprotokoll wurde "reverse engineered", da es keine öffentliche Dokumentation gibt.
 
 ## Hardware
-OpenDTU läuft einem ESP32 und benötigt ein NRF24L01+ Funktmodul. Den ESP32 hatte ich noch in einer Bastekiste und das Funkmodul habe ich für 2.90.- CHF gekauft. Ich habe beides auf eine Lochrasterplatine gelötet und ich warte noch auf ein 3D gedrucktes Gehäuse. Genauere Beschreibung zur [Hardware](https://github.com/tbnobody/OpenDTU#hardware-you-need) und [Verdrahtung](https://github.com/tbnobody/OpenDTU#wiring-up) findet ihr auf der Projektseite.
+OpenDTU läuft einem ESP32 und benötigt ein NRF24L01+ Funktmodul. Den ESP32 hatte ich noch in einer Bastelkiste und das Funkmodul habe ich für 2.90.- CHF gekauft. Ich habe beides auf eine Lochrasterplatine gelötet und ich warte noch auf ein 3D gedrucktes Gehäuse. Genauere Beschreibung zur [Hardware](https://github.com/tbnobody/OpenDTU#hardware-you-need) und [Verdrahtung](https://github.com/tbnobody/OpenDTU#wiring-up) findet ihr auf der Projektseite.
 
 ![](esp32.jpg)
 
