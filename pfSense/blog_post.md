@@ -2,7 +2,7 @@
 
 Das hier ist ein kurzer Erfahrungsbericht über [pfSense](https://de.wikipedia.org/wiki/PfSense) keine Installationsanleitung.
 
-Seit knapp einem Jahr haben wir in unsrem Haus drei Unifi Access Points im Einsatz. Diese funktionieren vorbildlich. Zusätzlich dazu, hatte ich als Router ein  UniFi Security Gateway (USG). Alles zusammen kann wunderbar über den selbst gehosteten Unifi Controller verwaltet werden. Wirklich gut zu einem bezahlbaren Preis. Aber leider hatte das USG immer wieder Probleme bereitet. Nach ein bis zwei Betriebstagen gab es immer wieder Fehlfunktionen. Zum Beispiel funktionierte plötzlich die Port-Weiterleitung nicht mehr oder es gab ein Speicherüberlauf und die Netzwerkverbindungen vielen komplett aus. Nur das aus- und wieder einstecken schaffte Abhilfe. Ich hatte diese Fehler bei zwei Geräten und bin auch nicht der einzige. Bedauerlicherweise ist es wie immer - die Firma scheint sich nicht mehr für dieses altes Gerät zu interessieren und die Probleme werden nicht mehr behoben. Und hier kommt nun pfSense ins Spiel.
+Seit knapp einem Jahr haben wir in unsrem Haus drei Unifi Access Points im Einsatz. Diese funktionieren vorbildlich. Zusätzlich dazu, hatte ich als Router ein  UniFi Security Gateway (USG). Alles zusammen kann wunderbar über den selbst gehosteten Unifi Controller verwaltet werden. Wirklich gut zu einem bezahlbaren Preis. Aber leider hatte das USG immer wieder Probleme bereitet. Nach ein bis zwei Betriebstagen gab es immer wieder Fehlfunktionen. Zum Beispiel funktionierte plötzlich die Port-Weiterleitung nicht mehr oder es gab ein Speicherüberlauf und die Netzwerkverbindungen vielen komplett aus. Das Gerät hatte im Betrieb auch immer eine sehr hohe Temperatur. Nur das aus- und wieder einstecken schaffte Abhilfe. Ich hatte diese Fehler bei zwei Geräten und bin auch nicht der einzige. Bedauerlicherweise ist es wie immer - die Firma scheint sich nicht mehr für dieses altes Gerät zu interessieren und die Probleme werden nicht mehr behoben. Und hier kommt nun pfSense ins Spiel.
 
 ![](PfSense_logo.png)
 
@@ -18,7 +18,7 @@ Die minimalen Hardwareanforderungen sehen wie folgt aus:
 
 Als ich nach einem Weg suchte, pfSense einmal auszuprobieren, stiess ich auf den Begriff "one-armed router" oder ["router on a stick"](https://en.wikipedia.org/wiki/Router_on_a_stick). Es handelt sich um eine Methode des Inter-VLAN-Routing (virtuelle lokale Netzwerke), bei der ein Router über ein einziges Kabel mit einem Switch verbunden ist. Da ich im Keller noch einen Intel NUC [D34010WYK](https://ark.intel.com/content/www/de/de/ark/products/76978/intel-nuc-kit-d34010wyk.html) aus dem Jahr 2013 hatte und mein Switch VLAN's unterstützt, schien mir das eine gute Möglichkeit.
 
-Die Installation von pfSense via USB-Stick ist ziemlich einfach. Auch die Konfiguration des LAN und WAN Interface ist ein Kinderspiel. Ich habe mich an diese [Anleitung](https://thunderysteak.github.io/pfsense-single-nic-vlans) orientiert. Nach der Installation und Konfiguration meines Switch begrüsste mich das Webinterface von pfSense und die Internetverbindung funktionierte bereits.
+Die Installation von pfSense via USB-Stick ist ziemlich einfach. Auch die Konfiguration des LAN und WAN Interface ist ein Kinderspiel. Ich habe mich an dieser [Anleitung](https://thunderysteak.github.io/pfsense-single-nic-vlans) orientiert. Nach der Installation und Konfiguration meines Switch begrüsste mich das Webinterface von pfSense und die Internetverbindung funktionierte bereits.
 
 ![](dashboard.png)
 
@@ -30,3 +30,4 @@ Zu Testzwecken habe ich noch [Snort](https://de.wikipedia.org/wiki/Snort) instal
 
 Die Performance des einarmigen Routers stellt sich als sehr gut heraus. Wenn ich nicht gleichzeitig grosse Daten im LAN verschiebe, kann über die Full-duplex Ethernet Verbindung mein Gigabit Glasfaseranschluss voll ausgenutzt werden. Der Stromverbrauch des alten Intel NUC liegt zwischen 5 W und 10 W. Und das wichtigste: Es läuft absolut stabil!
 
+Vorerst ist das für mich eine gute Lösung und ein adäquater Ersatz für das USG. pfSense ist eine mächtige Firewall mit sehr vielen Möglichkeiten. Meine Fachkenntnisse sind weit davon entfernt, diese nutzen zu können. Ich würde sagen, es besteht die Gefahr, dass ich Fehlkonfigurationen vornehme. Dies birgt natürlich auch Gefahren. Ich habe mich meist an die [offiziellen Dokumentationen](https://docs.netgate.com/) gehalten und so wenig wie möglich an den Standardeinstellungen geändert. Somit bin ich zuversichtlich, und freue mich über eine stabile, kostengünstige und vor allem freie Lösung.
