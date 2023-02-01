@@ -1,0 +1,1756 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_INFLUXDB",
+      "label": "InfluxDB",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "influxdb",
+      "pluginName": "InfluxDB"
+    },
+    {
+      "name": "DS_SUN_AND MOON",
+      "label": "Sun and Moon",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "fetzerch-sunandmoon-datasource",
+      "pluginName": "Sun and Moon"
+    },
+    {
+      "name": "VAR_STROMPREIS",
+      "type": "constant",
+      "label": "strompreis",
+      "value": "0.3429",
+      "description": ""
+    },
+    {
+      "name": "VAR_EIGENVERBRAUCH",
+      "type": "constant",
+      "label": "eigenverbrauch",
+      "value": "190.0",
+      "description": ""
+    },
+    {
+      "name": "VAR_AUSSCHALTSCHWELLE",
+      "type": "constant",
+      "label": "ausschaltschwelle",
+      "value": "0.5",
+      "description": ""
+    },
+    {
+      "name": "VAR_PRODUKTION_ALTER_WR",
+      "type": "constant",
+      "label": "produktion_alter_wr",
+      "value": "328.0",
+      "description": ""
+    }
+  ],
+  "__elements": {},
+  "__requires": [
+    {
+      "type": "panel",
+      "id": "barchart",
+      "name": "Bar chart",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "bargauge",
+      "name": "Bar gauge",
+      "version": ""
+    },
+    {
+      "type": "datasource",
+      "id": "fetzerch-sunandmoon-datasource",
+      "name": "Sun and Moon",
+      "version": "0.2.1"
+    },
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "9.3.6"
+    },
+    {
+      "type": "datasource",
+      "id": "influxdb",
+      "name": "InfluxDB",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "stat",
+      "name": "Stat",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "timeseries",
+      "name": "Time series",
+      "version": ""
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-RdYlGr"
+          },
+          "decimals": 1,
+          "mappings": [],
+          "max": 300,
+          "min": 0,
+          "noValue": "0 W",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "watt"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 0,
+        "y": 0
+      },
+      "id": 25,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "hide": false,
+          "query": "ps = from(bucket: \"jackdaw\")\n  |> range(start: today())\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\")\n  |> filter(fn: (r) => r[\"host\"] == \"jackdaw_telegraf\")\n  |> filter(fn: (r) => r[\"topic\"] == \"solar/116181045303/0/power\")\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\n  |> last()\n\npn = from(bucket: \"jackdaw\")\n  |> range(start: today())\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\")\n  |> filter(fn: (r) => r[\"host\"] == \"jackdaw_telegraf\")\n  |> filter(fn: (r) => r[\"topic\"] == \"solar/114182959402/0/power\")\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\n  |> last()\n\njoin(tables: {ps: ps, pn: pn}, on: [\"_field\"])\n  |> map(fn: (r) => ({ r with _value : r._value_ps + r._value_pn }))\n  |> drop(columns: [\"_value_ps\", \"_value_pn\"])",
+          "refId": "A"
+        }
+      ],
+      "title": "Aktuelle Leistung",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "text",
+            "mode": "fixed"
+          },
+          "decimals": 1,
+          "mappings": [],
+          "max": 400,
+          "min": 0,
+          "noValue": "0 W",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 150
+              }
+            ]
+          },
+          "unit": "watt"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 4,
+        "y": 0
+      },
+      "id": 42,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "hide": false,
+          "query": "from(bucket: \"jackdaw\")\n  |> range(start: today())\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\")\n  |> filter(fn: (r) => r[\"host\"] == \"jackdaw_telegraf\")\n  |> filter(fn: (r) => r[\"topic\"] == \"solar/116181045303/0/power\")\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\n  |> last()",
+          "refId": "A"
+        }
+      ],
+      "title": "Aktuelle Leistung Süd",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "text",
+            "mode": "fixed"
+          },
+          "decimals": 1,
+          "mappings": [],
+          "max": 300,
+          "min": 0,
+          "noValue": "0 W",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 50
+              }
+            ]
+          },
+          "unit": "watt"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 8,
+        "y": 0
+      },
+      "id": 34,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "hide": false,
+          "query": "from(bucket: \"jackdaw\")\n  |> range(start: today())\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\")\n  |> filter(fn: (r) => r[\"host\"] == \"jackdaw_telegraf\")\n  |> filter(fn: (r) => r[\"topic\"] == \"solar/114182959402/0/power\")\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\n  |> last()",
+          "refId": "A"
+        }
+      ],
+      "title": "Aktuelle Leistung Nord",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "text",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "noValue": "0 W",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "watt"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 12,
+        "y": 0
+      },
+      "id": 13,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "hide": false,
+          "query": "ps = from(bucket: \"jackdaw\")\n  |> range(start: today())\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\")\n  |> filter(fn: (r) => r[\"host\"] == \"jackdaw_telegraf\")\n  |> filter(fn: (r) => r[\"topic\"] == \"solar/116181045303/0/power\")\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\n  |> aggregateWindow(every: 5m, fn: max)  \n\npn = from(bucket: \"jackdaw\")\n  |> range(start: today())\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\")\n  |> filter(fn: (r) => r[\"host\"] == \"jackdaw_telegraf\")\n  |> filter(fn: (r) => r[\"topic\"] == \"solar/114182959402/0/power\")\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\n  |> aggregateWindow(every: 5m, fn: max)  \n\njoin(tables: {ps: ps, pn: pn}, on: [\"_time\"])\n  |> map(fn: (r) => ({ r with _value : r._value_ps + r._value_pn }))\n  |> drop(columns: [\"_value_ps\", \"_value_pn\"])\n  |> max()",
+          "refId": "A"
+        }
+      ],
+      "title": "Spitzenleistung Heute",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "text",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "noValue": "0",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "kwatth"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 16,
+        "y": 0
+      },
+      "id": 7,
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "value"
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "// Es kann sein, dass die Werte für yiedday nicht immer stimmen\n// weil ein WR neu startet oder erst einer läuft.\n// Darum wird der Tagesertrag aus den yieldtotal Werten berechnet\n\n\nps = from(bucket: \"jackdaw\")\n  |> range(start: -1d)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\")\n  |> filter(fn: (r) => r[\"host\"] == \"jackdaw_telegraf\")\n  |> filter(fn: (r) => r[\"topic\"] == \"solar/116181045303/0/yieldtotal\")\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\n  |> aggregateWindow(every: 1d, fn: max, createEmpty: true) // maximal Wert des Tages\n  |> timeShift(duration: -1s, columns: [\"_time\"])           // time shift\n  |> fill(usePrevious: true)                                // falls aktueller Tag noch keine Werte hat\n  |> difference(nonNegative: false, columns: [\"_value\"])    // Differenz zwischen zwei Tagen ist der Tagesertrag\n\n\npn = from(bucket: \"jackdaw\")\n  |> range(start: -1d)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\")\n  |> filter(fn: (r) => r[\"host\"] == \"jackdaw_telegraf\")\n  |> filter(fn: (r) => r[\"topic\"] == \"solar/114182959402/0/yieldtotal\")\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\n  |> aggregateWindow(every: 1d, fn: max, createEmpty: true) \n  |> timeShift(duration: -1s, columns: [\"_time\"])\n  |> fill(usePrevious: true)\n  |> difference(nonNegative: false, columns: [\"_value\"])\n\njoin(tables: {ps: ps, pn: pn}, on: [\"_time\"])\n  |> map(fn: (r) => ({ r with _value : r._value_ps + r._value_pn }))\n  |> drop(columns: [\"_value_ps\", \"_value_pn\"])",
+          "refId": "A"
+        }
+      ],
+      "title": "Produktion Heute",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "purple",
+            "mode": "fixed"
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "kwatth"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 20,
+        "y": 0
+      },
+      "id": 6,
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "value"
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "ps = from(bucket: \"jackdaw\")\n  |> range(start: 1654053929)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\")\n  |> filter(fn: (r) => r[\"host\"] == \"jackdaw_telegraf\")\n  |> filter(fn: (r) => r[\"topic\"] == \"solar/116181045303/0/yieldtotal\")\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\n  |> last()\n\npn = from(bucket: \"jackdaw\")\n  |> range(start: 1654053929)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\")\n  |> filter(fn: (r) => r[\"host\"] == \"jackdaw_telegraf\")\n  |> filter(fn: (r) => r[\"topic\"] == \"solar/114182959402/0/yieldtotal\")\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\n  |> last()\n\njoin(tables: {ps: ps, pn: pn}, on: [\"_field\"])\n  |> map(fn: (r) => ({ r with _value : r._value_ps + r._value_pn }))\n  |> map(fn: (r) => ({ r with _value: r._value + ${produktion_alter_wr}}))\n  |> drop(columns: [\"_value_ps\", \"_value_pn\"])  ",
+          "refId": "A"
+        }
+      ],
+      "title": "Produktion Total",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-BlYlRd"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "fillOpacity": 80,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "kWh"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Time"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "time: DD.MM.YYYY"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "value {host=\"jackdaw_telegraf\", name=\"mqtt_consumer\", topic=\"solar/114182959402/0/yieldtotal\"}"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Ertrag Nord"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Total"
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": true
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "value {host=\"jackdaw_telegraf\", name=\"mqtt_consumer\", topic=\"solar/116181045303/0/yieldtotal\"}"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Ertrag Süd"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 10,
+        "x": 0,
+        "y": 4
+      },
+      "id": 39,
+      "options": {
+        "barRadius": 0.1,
+        "barWidth": 0.74,
+        "groupWidth": 0.7,
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "orientation": "vertical",
+        "showValue": "auto",
+        "stacking": "normal",
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 100
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "hide": false,
+          "query": "pn = from(bucket: \"jackdaw\")\n  |> range(start: -30d, stop: today())\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\")\n  |> filter(fn: (r) => r[\"topic\"] == \"solar/114182959402/0/yieldtotal\")\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\n  |> filter(fn: (r) => r[\"host\"] == \"jackdaw_telegraf\")\n  |> aggregateWindow(every: 1d, fn: max, createEmpty: true) // maximal Wert des Tages\n  |> timeShift(duration: -1s, columns: [\"_time\"])           // time shift\n  |> fill(usePrevious: true)                                // falls aktueller Tag noch keine Werte hat\n  |> fill(value: 0.0)                                       // falls mehrere Tage keine Werte haben\n  |> difference(nonNegative: false, columns: [\"_value\"])    // Differenz zwischen zwei Tagen ist der Tagesertrag\n\npn",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "hide": false,
+          "query": "ps = from(bucket: \"jackdaw\")\n  |> range(start: -30d, stop: today())\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\")\n  |> filter(fn: (r) => r[\"host\"] == \"jackdaw_telegraf\")\n  |> filter(fn: (r) => r[\"topic\"] == \"solar/116181045303/0/yieldtotal\")\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\n  |> aggregateWindow(every: 1d, fn: max, createEmpty: true) // maximal Wert des Tages\n  |> timeShift(duration: -1s, columns: [\"_time\"])           // time shift\n  |> fill(usePrevious: true)                                // falls aktueller Tag noch keine Werte hat\n  |> fill(value: 0.0)                                       // falls mehrere Tage keine Werte haben\n  |> difference(nonNegative: false, columns: [\"_value\"])    // Differenz zwischen zwei Tagen ist der Tagesertrag\n\n  ps",
+          "refId": "C"
+        }
+      ],
+      "title": "Produktion letzte 30 Tage",
+      "transformations": [
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "Total",
+            "mode": "reduceRow",
+            "reduce": {
+              "reducer": "sum"
+            },
+            "replaceFields": false
+          }
+        }
+      ],
+      "type": "barchart"
+    },
+    {
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Mixed --"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "smooth",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 1,
+            "pointSize": 7,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "dashed"
+            }
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 200
+              }
+            ]
+          },
+          "unit": "watt"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Sun altitude"
+            },
+            "properties": [
+              {
+                "id": "custom.axisPlacement",
+                "value": "right"
+              },
+              {
+                "id": "unit",
+                "value": "degree"
+              },
+              {
+                "id": "displayName",
+                "value": "Winkel der Sonne"
+              },
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "dash": [
+                    10,
+                    10
+                  ],
+                  "fill": "dash"
+                }
+              },
+              {
+                "id": "custom.lineWidth",
+                "value": 1
+              },
+              {
+                "id": "custom.fillOpacity",
+                "value": 0
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "semi-dark-yellow",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "max",
+                "value": 70
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "mqtt_consumer value {host=\"jackdaw_telegraf\", topic=\"solar/116181045303/0/power\"}"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Leistung Süd"
+              },
+              {
+                "id": "custom.lineWidth",
+                "value": 1
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#6f0043",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "mqtt_consumer value {host=\"jackdaw_telegraf\", topic=\"solar/114182959402/0/power\"}"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Leistung Nord"
+              },
+              {
+                "id": "custom.lineWidth",
+                "value": 1
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#095000",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byFrameRefID",
+              "options": "A"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Leistung gesamt"
+              },
+              {
+                "id": "custom.lineWidth",
+                "value": 3
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 16,
+        "w": 14,
+        "x": 10,
+        "y": 4
+      },
+      "id": 8,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "hide": false,
+          "query": "from(bucket: \"jackdaw\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\")\n  |> filter(fn: (r) => r[\"topic\"] == \"solar/114182959402/0/power\" or r[\"topic\"] == \"solar/116181045303/0/power\")\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")|> aggregateWindow(every: 5m, fn: mean, createEmpty: false)\n  |> filter(fn: (r) => r[\"host\"] == \"jackdaw_telegraf\")\n  |> aggregateWindow(every: v.windowPeriod, fn: max, createEmpty: false)\n  |> yield(name: \"mean\")\n\n\n",
+          "refId": "Leistung"
+        },
+        {
+          "datasource": {
+            "type": "fetzerch-sunandmoon-datasource",
+            "uid": "${DS_SUN_AND MOON}"
+          },
+          "hide": false,
+          "refId": "Sonne",
+          "target": "sun_altitude"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "hide": false,
+          "query": "ps = from(bucket: \"jackdaw\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\")\n  |> filter(fn: (r) => r[\"host\"] == \"jackdaw_telegraf\")\n  |> filter(fn: (r) => r[\"topic\"] == \"solar/116181045303/0/power\")\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\n  |> aggregateWindow(every: 5m, fn: max, createEmpty: false)\n\npn = from(bucket: \"jackdaw\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\")\n  |> filter(fn: (r) => r[\"host\"] == \"jackdaw_telegraf\")\n  |> filter(fn: (r) => r[\"topic\"] == \"solar/114182959402/0/power\")\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\n  |> aggregateWindow(every: 5m, fn: max, createEmpty: false)\n\njoin(tables: {ps: ps, pn: pn}, on: [\"_time\"])\n  |> map(fn: (r) => ({ r with _value : r._value_ps + r._value_pn }))\n  |> drop(columns: [\"_value_ps\", \"_value_pn\"])",
+          "refId": "A"
+        }
+      ],
+      "title": "Leistungsverlauf",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "min": 0,
+          "noValue": "0 W",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "watt"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "value {host=\"jackdaw_telegraf\", topic=\"solar/114182959402/1/power\"}"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "2 Module"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "value {host=\"jackdaw_telegraf\", topic=\"solar/114182959402/2/power\"}"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "1 Modul"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 0,
+        "y": 14
+      },
+      "id": 37,
+      "options": {
+        "displayMode": "lcd",
+        "minVizHeight": 10,
+        "minVizWidth": 0,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": false
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "from(bucket: \"jackdaw\")\n  |> range(start: -5m)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\")\n  |> filter(fn: (r) => r[\"host\"] == \"jackdaw_telegraf\")\n  |> filter(fn: (r) => r[\"topic\"] == \"solar/114182959402/1/power\" or r[\"topic\"] == \"solar/114182959402/2/power\")\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\n  |> last()",
+          "refId": "A"
+        }
+      ],
+      "title": "DC Leistung Nord",
+      "type": "bargauge"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "min": 0,
+          "noValue": "0 W",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "watt"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "value {host=\"jackdaw_telegraf\", topic=\"solar/116181045303/1/power\"}"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "vorne rechts"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "value {host=\"jackdaw_telegraf\", topic=\"solar/116181045303/2/power\"}"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "vorne links"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "value {host=\"jackdaw_telegraf\", topic=\"solar/116181045303/3/power\"}"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "hinten rechts"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "value {host=\"jackdaw_telegraf\", topic=\"solar/116181045303/4/power\"}"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "hinten links"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 4,
+        "y": 14
+      },
+      "id": 29,
+      "options": {
+        "displayMode": "lcd",
+        "minVizHeight": 10,
+        "minVizWidth": 0,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": false
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "from(bucket: \"jackdaw\")\n  |> range(start: -5m)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\")\n  |> filter(fn: (r) => r[\"host\"] == \"jackdaw_telegraf\")\n  |> filter(fn: (r) => r[\"topic\"] == \"solar/116181045303/1/power\" or r[\"topic\"] == \"solar/116181045303/2/power\" or r[\"topic\"] == \"solar/116181045303/3/power\" or r[\"topic\"] == \"solar/116181045303/4/power\")\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\n  |> last()",
+          "refId": "A"
+        }
+      ],
+      "title": "DC Leistung Süd",
+      "type": "bargauge"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "text",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "max": 400,
+          "min": 0,
+          "noValue": "0 W",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 150
+              }
+            ]
+          },
+          "unit": "watt"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 0,
+        "y": 20
+      },
+      "id": 35,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "hide": false,
+          "query": "from(bucket: \"jackdaw\")\n  |> range(start: today())\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\")\n  |> filter(fn: (r) => r[\"host\"] == \"jackdaw_telegraf\")\n  |> filter(fn: (r) => r[\"topic\"] == \"limiter/status/system_limit\")\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\n  |> last()",
+          "refId": "A"
+        }
+      ],
+      "title": "System Limit",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "text",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "max": 400,
+          "min": 0,
+          "noValue": "0 W",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 150
+              }
+            ]
+          },
+          "unit": "watt"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 3,
+        "y": 20
+      },
+      "id": 45,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "hide": false,
+          "query": "from(bucket: \"jackdaw\")\n  |> range(start: today())\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\")\n  |> filter(fn: (r) => r[\"host\"] == \"jackdaw_telegraf\")\n  |> filter(fn: (r) => r[\"topic\"] == \"limiter/status/system_power\")\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\n  |> last()",
+          "refId": "A"
+        }
+      ],
+      "title": "System Leistung",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "text",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "max": 400,
+          "min": 0,
+          "noValue": "0 W",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 150
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 6,
+        "y": 20
+      },
+      "id": 43,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "hide": false,
+          "query": "from(bucket: \"jackdaw\")\n  |> range(start: today())\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\")\n  |> filter(fn: (r) => r[\"host\"] == \"jackdaw_telegraf\")\n  |> filter(fn: (r) => r[\"topic\"] == \"limiter/status/controler_interval\")\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\n  |> last()",
+          "refId": "A"
+        }
+      ],
+      "title": "Limiter Interval",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "text",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "max": 400,
+          "min": 0,
+          "noValue": "0 W",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 150
+              }
+            ]
+          },
+          "unit": "watt"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 9,
+        "y": 20
+      },
+      "id": 44,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "hide": false,
+          "query": "from(bucket: \"jackdaw\")\n  |> range(start: today())\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\")\n  |> filter(fn: (r) => r[\"host\"] == \"jackdaw_telegraf\")\n  |> filter(fn: (r) => r[\"topic\"] == \"limiter/status/controler_increment\")\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\n  |> last()",
+          "refId": "A"
+        }
+      ],
+      "title": "Limiter Inkrement",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "text",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "dateTimeAsLocalNoDateIfToday"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 12,
+        "y": 20
+      },
+      "id": 14,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "limit": 1,
+          "values": true
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "hide": false,
+          "query": "from(bucket: \"jackdaw\")\n  |> range(start: today())\n  |> filter(fn: (r) => r[\"_measurement\"] == \"weather\")\n  |> filter(fn: (r) => r[\"_field\"] == \"sunrise\")\n  |> filter(fn: (r) => r[\"city\"] == \"Frauenfeld\")\n  |> map(fn: (r) => ({ r with _value: r._value / 1000000 })) // Millisekunden\n  |> last()\n\n\n",
+          "refId": "A"
+        }
+      ],
+      "title": "Sonnenaufgang",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "text",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "dateTimeAsLocalNoDateIfToday"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 15,
+        "y": 20
+      },
+      "id": 15,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "limit": 1,
+          "values": true
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "hide": false,
+          "query": "from(bucket: \"jackdaw\")\n  |> range(start: today())\n  |> filter(fn: (r) => r[\"_measurement\"] == \"weather\")\n  |> filter(fn: (r) => r[\"_field\"] == \"sunset\")\n  |> filter(fn: (r) => r[\"city\"] == \"Frauenfeld\")\n  |> map(fn: (r) => ({ r with _value: r._value / 1000000 })) // Millisekunden\n  |> last()\n\n\n",
+          "refId": "A"
+        }
+      ],
+      "title": "Sonnenuntergang",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "text",
+            "mode": "fixed"
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "currencyCHF"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 18,
+        "y": 20
+      },
+      "id": 40,
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "value"
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "// Es kann sein, dass die Werte für yiedday nicht immer stimmen\n// weil ein WR neu startet oder erst einer läuft.\n// Darum wird der Tagesertrag aus den yieldtotal Werten berechnet\n\n\nps = from(bucket: \"jackdaw\")\n  |> range(start: -1d)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\")\n  |> filter(fn: (r) => r[\"host\"] == \"jackdaw_telegraf\")\n  |> filter(fn: (r) => r[\"topic\"] == \"solar/116181045303/0/yieldtotal\")\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\n  |> aggregateWindow(every: 1d, fn: max, createEmpty: true) // maximal Wert des Tages\n  |> timeShift(duration: -1s, columns: [\"_time\"])           // time shift\n  |> fill(usePrevious: true)                                // falls aktueller Tag noch keine Werte hat\n  |> difference(nonNegative: false, columns: [\"_value\"])    // Differenz zwischen zwei Tagen ist der Tagesertrag\n\n\npn = from(bucket: \"jackdaw\")\n  |> range(start: -1d)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\")\n  |> filter(fn: (r) => r[\"host\"] == \"jackdaw_telegraf\")\n  |> filter(fn: (r) => r[\"topic\"] == \"solar/114182959402/0/yieldtotal\")\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\n  |> aggregateWindow(every: 1d, fn: max, createEmpty: true) \n  |> timeShift(duration: -1s, columns: [\"_time\"])\n  |> fill(usePrevious: true)\n  |> difference(nonNegative: false, columns: [\"_value\"])\n\njoin(tables: {ps: ps, pn: pn}, on: [\"_time\"])\n  |> map(fn: (r) => ({ r with _value : (r._value_ps + r._value_pn) * ${strompreis}}))\n  |> drop(columns: [\"_value_ps\", \"_value_pn\"])",
+          "refId": "A"
+        }
+      ],
+      "title": "Gespart Heute",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "purple",
+            "mode": "fixed"
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "currencyCHF"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 21,
+        "y": 20
+      },
+      "id": 41,
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "value"
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "ps = from(bucket: \"jackdaw\")\n  |> range(start: 1654053929)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\")\n  |> filter(fn: (r) => r[\"host\"] == \"jackdaw_telegraf\")\n  |> filter(fn: (r) => r[\"topic\"] == \"solar/116181045303/0/yieldtotal\")\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\n  |> last()\n\npn = from(bucket: \"jackdaw\")\n  |> range(start: 1654053929)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mqtt_consumer\")\n  |> filter(fn: (r) => r[\"host\"] == \"jackdaw_telegraf\")\n  |> filter(fn: (r) => r[\"topic\"] == \"solar/114182959402/0/yieldtotal\")\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\n  |> last()\n\njoin(tables: {ps: ps, pn: pn}, on: [\"_field\"])\n  |> map(fn: (r) => ({ r with _value : r._value_ps + r._value_pn }))\n  |> map(fn: (r) => ({ r with _value: r._value + ${produktion_alter_wr}}))\n  |> map(fn: (r) => ({ r with _value: r._value * ${strompreis}}))\n  |> drop(columns: [\"_value_ps\", \"_value_pn\"])  ",
+          "refId": "A"
+        }
+      ],
+      "title": "Gespart Total",
+      "type": "stat"
+    }
+  ],
+  "refresh": "5s",
+  "schemaVersion": 37,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "hide": 2,
+        "name": "strompreis",
+        "query": "${VAR_STROMPREIS}",
+        "skipUrlSync": false,
+        "type": "constant",
+        "current": {
+          "value": "${VAR_STROMPREIS}",
+          "text": "${VAR_STROMPREIS}",
+          "selected": false
+        },
+        "options": [
+          {
+            "value": "${VAR_STROMPREIS}",
+            "text": "${VAR_STROMPREIS}",
+            "selected": false
+          }
+        ]
+      },
+      {
+        "hide": 2,
+        "name": "eigenverbrauch",
+        "query": "${VAR_EIGENVERBRAUCH}",
+        "skipUrlSync": false,
+        "type": "constant",
+        "current": {
+          "value": "${VAR_EIGENVERBRAUCH}",
+          "text": "${VAR_EIGENVERBRAUCH}",
+          "selected": false
+        },
+        "options": [
+          {
+            "value": "${VAR_EIGENVERBRAUCH}",
+            "text": "${VAR_EIGENVERBRAUCH}",
+            "selected": false
+          }
+        ]
+      },
+      {
+        "hide": 2,
+        "name": "ausschaltschwelle",
+        "query": "${VAR_AUSSCHALTSCHWELLE}",
+        "skipUrlSync": false,
+        "type": "constant",
+        "current": {
+          "value": "${VAR_AUSSCHALTSCHWELLE}",
+          "text": "${VAR_AUSSCHALTSCHWELLE}",
+          "selected": false
+        },
+        "options": [
+          {
+            "value": "${VAR_AUSSCHALTSCHWELLE}",
+            "text": "${VAR_AUSSCHALTSCHWELLE}",
+            "selected": false
+          }
+        ]
+      },
+      {
+        "description": "kWh",
+        "hide": 2,
+        "name": "produktion_alter_wr",
+        "query": "${VAR_PRODUKTION_ALTER_WR}",
+        "skipUrlSync": false,
+        "type": "constant",
+        "current": {
+          "value": "${VAR_PRODUKTION_ALTER_WR}",
+          "text": "${VAR_PRODUKTION_ALTER_WR}",
+          "selected": false
+        },
+        "options": [
+          {
+            "value": "${VAR_PRODUKTION_ALTER_WR}",
+            "text": "${VAR_PRODUKTION_ALTER_WR}",
+            "selected": false
+          }
+        ]
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Photovoltaik 3",
+  "uid": "srbAnhh4z",
+  "version": 62,
+  "weekStart": ""
+}

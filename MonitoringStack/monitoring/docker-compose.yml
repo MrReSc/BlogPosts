@@ -1,0 +1,40 @@
+version: '3'
+services:
+  influxdb:
+    image: influxdb:latest
+    container_name: Jackdaw_Mon_InfluxDB
+    volumes:
+      - ./influxdb2:/var/lib/influxdb2:rw
+    ports:
+      - "8086:8086"
+    restart: always  
+
+  telegraf:
+    image: telegraf:latest
+    container_name: Jackdaw_Mon_Telegraf
+    links:
+      - influxdb
+    volumes:
+      - ./telegraf/monitoring-telegraf-config.conf:/etc/telegraf/telegraf.conf
+    restart: always    
+    
+  mosquitto:
+    image: eclipse-mosquitto
+    container_name: Jackdaw_Mon_Mosquitto
+    volumes:
+      - ./mosquitto:/mosquitto/:rw
+    ports:
+      - 1883:1883
+      - 9001:9001
+    restart: always    
+    
+  grafana:
+    image: grafana/grafana:latest
+    container_name: Jackdaw_Mon_Grafana
+    user: "1024"
+    ports:
+      - 8055:3000
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning:rw
+      - ./grafana/data:/var/lib/grafana:rw
+    restart: always    
