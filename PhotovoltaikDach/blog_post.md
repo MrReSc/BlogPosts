@@ -6,7 +6,7 @@ Zugegeben, der Titel könnte provozieren. Aber es prasselt in 30 Minuten genüge
 
 Alles begann im Januar 2022, als ich aus gebrauchten Solarpanels und einem alten Wechselrichter eine [Plug-&-Play-Photovoltaikanlage](https://gnulinux.ch/plug-play-photovoltaikanlagen), auch bekannt als Balkonkraftwerk, gebaut habe. Diese Anlage wurde im Laufe der Zeit optimiert, und der Wechselrichter wurde durch einen Modulwechselrichter ersetzt. Das Monitoring übernahm fortan [openDTU](https://gnulinux.ch/opendtu-ertrags%C3%BCberwachung-von-hoymiles-wechselrichter-ohne-cloud) und ein Grafana-Dashboard. Zur selben Zeit war ich an einem Projekt beteiligt, um in unserer Siedlung eine grosse PV-Anlage zu realisieren. Das Projekt scheiterte allerdings an zu vielen unfachlichen Meinungen.
 
-Das Balkonkraftwerk auf unserem Velohäuschen leistete so gute Arbeit, dass sich unsere Stromkosten halbierten. Und die Tatsache, dass es so einfach geworden ist, Strom zu erzeugen – ganz ohne mechanische Bewegung oder Verbrennung – faszinierte mich zunehmend. Ich wollte unbedingt eine grosse PV-Anlage auf unserem Dach haben. Im Jahr 2023 holte ich einige Offerten für eine Dachanlage ein. Aber da die Nachfrage wegen der Energiekrise so enorm hoch war, waren auch die Kosten entsprechend hoch. Die Anlage hätte ca. 30'000 bis 35'000 CHF gekostet.
+Das Balkonkraftwerk auf unserem Velohäuschen leistete so gute Arbeit, dass sich unsere Stromkosten halbierten. Die Tatsache, dass es so einfach geworden ist, Strom zu erzeugen – ganz ohne mechanische Bewegung oder Verbrennung – faszinierte mich zunehmend. Ich wollte unbedingt eine grosse PV-Anlage auf unserem Dach haben. Im Jahr 2023 holte ich einige Offerten für eine Dachanlage ein. Aber da die Nachfrage wegen der Energiekrise so enorm hoch war, waren auch die Kosten entsprechend hoch. Die Anlage hätte ca. 30'000 bis 35'000 CHF gekostet.
 
 An einem Grillfest im Sommer 2023 fragte mich eine Person aus meinem Bekanntenkreis, ob ich beim Bau ihrer Solaranlage helfen würde. Sie wollte die Anlage im Selbstbau mit fachlicher Anleitung umsetzen. Ich sagte zu. Im Herbst 2023 war ich dann einige Tage auf dem Hausdach und half mit. Bereits nach dem ersten Tag war für mich klar, dass ich das auch machen möchte.
 
@@ -20,10 +20,10 @@ Ende des Jahres 2023 erstellte ich die ersten Studien zu unserem Haus. Es gibt v
 
 Der Preisunterschied war signifikant. Wie oben erwähnt, kostet eine schlüsselfertige Anlage ca. 35'000 CHF. Abzüglich [Einmalvergütung](https://de.wikipedia.org/wiki/Photovoltaik_in_der_Schweiz#F%C3%B6rderung_der_Photovoltaik) und Steuerersparnissen belaufen sich die Kosten immer noch auf ca. 25'000 CHF. Die Selbstbauvariante kostet mit denselben Abzügen ca. 15'000 CHF. Meine Partnerin und ich entschieden uns, die Anlage selber zu bauen, und bestellten das Material im Januar 2024 mit dem Ziel, im April mit dem Bau zu beginnen.
 
-Bis zum Baustart im April musste ich noch einige Dinge organisieren. Ich übernahm die Bauleitung selbst.
+Bis zum Baustart im April musste ich noch einige Dinge organisieren. Ich übernahm die Bauleitung selbst:
 
 - Zum Baubeginn musste ein Gerüst stehen. Als Selbstbauende ist dies zwar nicht Pflicht, aber bei der Sicherheit sollte man wirklich nicht sparen.
-- Ein Elektriker oder eine Elektrikerin muss organisiert werden, die den Wechselstromanschluss ausführt und abnimmt. Die Gleichstromverkabelung darf im Selbstbau ausgeführt werden.
+- Ein Elektriker oder eine Elektrikerin musste organisiert werden, die den Wechselstromanschluss ausführt und abnimmt. Die Gleichstromverkabelung darf im Selbstbau ausgeführt werden.
 - Ein Baum musste gefällt werden, der das halbe Süddach abschattete.
 - Und zu guter Letzt mussten ein paar helfende Hände organisiert werden.
 
@@ -33,9 +33,9 @@ Als der April da war, stand das Gerüst, und das Material war geliefert. Meine P
 
 ## Der Aufbau
 
-Folgend möchte ich euch die einzelnen Schritte beim Aufbau einer PV-Dachanlage zeigen. Zu dem konkreten Vorgehen findet man leider sehr wenig oder unvollständige Informationen im Internet. Ich möchte euch zeigen, dass es sich nicht um Raketenwissenschaft handelt. Alle mit handwerklichem Geschick sind in der Lage, eine PV-Anlage zu bauen. Natürlich muss jedes Hausdach individuell abgeklärt werden. Aber im Grundsatz wird ein Schrägdach überall gleich aufgebaut. Auch die unterschiedlichen Montagesysteme sind im Grundsatz gleich.
+Im Folgenden möchte ich euch die einzelnen Schritte beim Aufbau einer PV-Dachanlage zeigen. Zu dem konkreten Vorgehen findet man leider sehr wenig oder unvollständige Informationen im Internet. Ich möchte euch zeigen, dass es sich nicht um Raketenwissenschaft handelt. Alle mit handwerklichem Geschick sind in der Lage, eine PV-Anlage zu bauen. Natürlich muss jedes Hausdach individuell abgeklärt werden. Aber im Grundsatz wird ein Schrägdach überall gleich aufgebaut. Auch die unterschiedlichen Montagesysteme sind im Grundsatz gleich.
 
-Die Arbeiten teilen sich ungefähr in folgende Arbeitsschritte auf:
+Die Arbeiten teilen sich ungefähr in folgende Schritte auf:
 
 - Dachhaken montieren (50 %)
 - Unterkonstruktion montieren (30 %)
@@ -43,9 +43,9 @@ Die Arbeiten teilen sich ungefähr in folgende Arbeitsschritte auf:
 - Solarpanels montieren (5 %)
 - Wechselrichter und Steigleitung montieren (10 %)
 
-Bevor wir mit den Arbeiten auf dem Dach angefangen haben, haben wir anhand der Statikberechnung und des Aufbauplans alle Dachhaken und Modulfelder auf dem Dach eingemessen und mit Kreide markiert. Dies ist ein sehr wichtiger Schritt und muss gewissenhaft und nach den Angaben der Berechnungen ausgeführt werden.
+Bevor wir mit den Arbeiten auf dem Dach begonnen haben, haben wir anhand der Statikberechnung und des Aufbauplans alle Dachhaken und Modulfelder auf dem Dach eingemessen und mit Kreide markiert. Dies ist ein sehr wichtiger Schritt und muss gewissenhaft und nach den Angaben der Berechnungen ausgeführt werden.
 
-Nun beginnen wir mit den Dachhaken. Dies ist die anstrengendste und zeitaufwendigste Arbeit. Die Dachhaken verbinden die PV-Anlage mit dem Hausdach. Dazu werden die Dachhaken mit langen Schrauben an den Dachsparren befestigt. Der Dachhaken schaut zwischen zwei Ziegeln aus dem Dach heraus. Damit die Ziegel weiterhin dicht abschliessen, muss ein kleines Stück vom oberen und unteren Ziegel ausgeschnitten werden. Geübte Dachdeckerinnen und Dachdecker machen das mit einem gezielten Hammerschlag. Wir haben es mit dem Winkelschleifer und einer Diamantscheibe gemacht. Das geht schnell, präzise und auch sehr einfach. Die Dachhaken müssen in der Höhe exakt eingepasst werden. Da später die Last senkrecht zur Dachfläche eingeleitet wird, kann sich der Dachhaken leicht durchbiegen. Dabei darf er keinesfalls auf den darunterliegenden Ziegel drücken, da dies den Ziegel beschädigen und das Dach undicht machen könnte.
+Nun begannen wir mit den Dachhaken. Dies ist die anstrengendste und zeitaufwendigste Arbeit. Die Dachhaken verbinden die PV-Anlage mit dem Hausdach. Dazu werden die Dachhaken mit langen Schrauben an den Dachsparren befestigt. Der Dachhaken schaut zwischen zwei Ziegeln aus dem Dach heraus. Damit die Ziegel weiterhin dicht abschliessen, muss ein kleines Stück vom oberen und unteren Ziegel ausgeschnitten werden. Geübte Dachdeckerinnen und Dachdecker machen das mit einem gezielten Hammerschlag. Wir haben es mit dem Winkelschleifer und einer Diamantscheibe gemacht. Das geht schnell, präzise und auch sehr einfach. Die Dachhaken müssen in der Höhe exakt eingepasst werden. Da später die Last senkrecht zur Dachfläche eingeleitet wird, kann sich der Dachhaken leicht durchbiegen. Dabei darf er keinesfalls auf den darunterliegenden Ziegel drücken, da dies den Ziegel beschädigen und das Dach undicht machen könnte.
 
 ![](Dachhaken1.jpg)
 ![](Dachhaken2.jpg)
@@ -73,11 +73,13 @@ Sobald die Unterkonstruktion abgeschlossen ist, ist die Anlage eigentlich so gut
 
 ## Abnahme und Förderung
 
-In der Schweiz gibt es im Prinzip zwei Förderprogramme. Das erste ist, wie oben erwähnt, die Einmalvergütung. Mit einer Einmalvergütung erhalten Betreiberinnen und Betreiber von Photovoltaikanlagen einen einmaligen Investitionsbeitrag. Dieser ist von der Grösse, Lage und Ausrichtung der PV-Anlage abhängig. Diese Einmalvergütung wird jedes Jahr ein bisschen weniger und wird wohl in ein paar Jahren ganz verschwinden. Dies ist auch gut so, da sich die PV-Anlagen bereits ohne diese Förderung selber tragen. Die zweite Förderung ist eigentlich mehr eine indirekte Förderung. Seit 2013 besteht in der Schweiz die gesetzliche Pflicht, die gesamte Stromproduktion aus Kraftwerken mit einer Netzanschlussleistung von über 30 kVA mittels Herkunftsnachweis zu erfassen und unabhängig beglaubigen zu lassen. Der Hauptzweck der Herkunftsnachweise (HKN) ist es, gegenüber den Endverbrauchenden Transparenz zu schaffen. Bei der Stromproduktion werden HKN erstellt, welche später gegenüber den Endverbrauchenden in der Stromkennzeichnung verwendet werden. Zudem erhält Strom aus erneuerbaren Energien durch die HKN einen Mehrwert, der Produzierende für höhere Produktionskosten entschädigt. Damit man die Einmalvergütung sowie die HKN ausbezahlt bekommt, muss jede PV-Anlage von einem unabhängigen Unternehmen beglaubigt und abgenommen werden. Auch unser lokaler Energieversorger machte zusätzlich noch eine Abnahme.
+In der Schweiz gibt es im Prinzip zwei Förderprogramme. Das erste ist, wie oben erwähnt, die Einmalvergütung. Mit einer Einmalvergütung erhalten Betreiberinnen und Betreiber von Photovoltaikanlagen einen einmaligen Investitionsbeitrag. Dieser ist von der Grösse, Lage und Ausrichtung der PV-Anlage abhängig. Diese Einmalvergütung wird jedes Jahr ein bisschen geringer und wird wohl in ein paar Jahren ganz verschwinden. Das ist auch gut so, da sich die PV-Anlagen bereits ohne diese Förderung selber tragen. 
+
+Die zweite Förderung ist eigentlich mehr eine indirekte Förderung. Seit 2013 besteht in der Schweiz die gesetzliche Pflicht, die gesamte Stromproduktion aus Kraftwerken mit einer Netzanschlussleistung von über 30 kVA mittels Herkunftsnachweis zu erfassen und unabhängig beglaubigen zu lassen. Der Hauptzweck der Herkunftsnachweise (HKN) ist es, gegenüber den Endverbrauchenden Transparenz zu schaffen. Bei der Stromproduktion werden HKN erstellt, welche später in der Stromkennzeichnung gegenüber den Endverbrauchenden verwendet werden. Zudem erhält Strom aus erneuerbaren Energien durch die HKN einen Mehrwert, der Produzierende für höhere Produktionskosten entschädigt. Damit man die Einmalvergütung sowie die HKN ausbezahlt bekommt, muss jede PV-Anlage von einem unabhängigen Unternehmen beglaubigt und abgenommen werden. Auch unser lokaler Energieversorger führte zusätzlich eine Abnahme durch.
 
 ## Monitoring
 
-Bei der Auswahl des Wechselrichters legte ich grossen Wert darauf, dass ich die Überwachung der Anlage lokal ohne einen Cloud-Dienst des Herstellers bewerkstelligen kann. Da ich bereits Home Assistant nutze, sollte sich der Wechselrichter in Home Assistant integrieren lassen. Meine Wahl fiel auf einen Fronius Symo Advanced Wechselrichter. Einerseits gibt es bereits eine Integration in Home Assistant, andererseits bietet das Gerät eine Schnittstelle über Modbus TCP. Diese Schnittstelle verwendet den SunSpec-Standard. So lassen sich alle Werte problemlos und ohne Cloud auslesen.
+Bei der Auswahl des Wechselrichters legte ich grossen Wert darauf, dass ich die Überwachung der Anlage lokal und ohne einen Cloud-Dienst des Herstellers bewerkstelligen kann. Da ich bereits Home Assistant nutze, sollte sich der Wechselrichter in Home Assistant integrieren lassen. Meine Wahl fiel auf einen Fronius Symo Advanced Wechselrichter. Einerseits gibt es bereits eine Integration in Home Assistant, andererseits bietet das Gerät eine Schnittstelle über Modbus TCP. Diese Schnittstelle verwendet den SunSpec-Standard. So lassen sich alle Werte problemlos und ohne Cloud auslesen.
 
 ![](Fronius.png)
 
