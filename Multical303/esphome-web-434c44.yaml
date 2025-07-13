@@ -1,0 +1,127 @@
+esphome:
+  name: esphome-web-434c44
+  friendly_name: Wärmemengenzähler
+  min_version: 2024.11.0
+  name_add_mac_suffix: false
+
+esp32:
+  board: esp32-s3-devkitc-1
+  variant: ESP32S3
+  framework:
+    type: arduino
+
+web_server:
+  port: 80
+  local: true
+
+# Enable logging
+logger:
+  level: DEBUG
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: gggggggggggg/VL/dddddddddddddddfffffffffffff=
+
+# Allow Over-The-Air updates
+ota:
+- platform: esphome
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  use_address: 192.168.0.29
+
+time:
+  - platform: sntp
+    id: time_sntp
+    timezone: Europe/Zurich
+    servers:
+     - 192.168.0.1
+
+# https://github.com/SzczepanLeon/esphome-components/tree/version_4
+external_components:
+  - source: github://SzczepanLeon/esphome-components@version_4
+    refresh: 0d
+    components: [ wmbus ]
+
+wmbus:
+  mosi_pin: GPIO35 # violett
+  miso_pin: GPIO37 # orange
+  clk_pin:  GPIO36 # blau
+  cs_pin:   GPIO34 # schwarz
+  gdo0_pin: GPIO15 # grün
+  gdo2_pin: GPIO16 # gelb
+  # vcc weiss
+  # gnd grau
+
+  all_drivers: False
+  #sync_mode: True
+  log_all: True
+
+text_sensor:
+  - platform: wmbus
+    meter_id: !secret wmz_meter_id
+    type: kamheat
+    key: !secret wmz_key
+    sensors:
+      - name: "status"
+        field: "status"
+
+sensor:
+  - platform: wmbus
+    meter_id: !secret wmz_meter_id
+    type: kamheat
+    key: !secret wmz_key
+    sensors:
+      - name: "rssi"
+        field: "rssi"
+        accuracy_decimals: 0
+        unit_of_measurement: "dBm"
+        device_class: "signal_strength"
+        state_class: "measurement"
+        entity_category: "diagnostic"
+
+      - name: "t1_temperature_inlet"
+        field: "t1_temperature"
+        accuracy_decimals: 2
+        unit_of_measurement: "°C"
+        device_class: "temperature"
+        state_class: "measurement"
+        icon: "mdi:thermometer"
+
+      - name: "t2_temperature_outlet"
+        field: "t2_temperature"
+        accuracy_decimals: 2
+        unit_of_measurement: "°C"
+        device_class: "temperature"
+        state_class: "measurement"
+        icon: "mdi:thermometer"
+
+      - name: "total_energy_consumption"
+        field: "total_energy_consumption"
+        accuracy_decimals: 0
+        unit_of_measurement: "kWh"
+        device_class: "energy"
+        state_class: "total_increasing"
+        icon: "mdi:heat-pump"
+
+      - name: "total_volume"
+        field: "total_volume"
+        accuracy_decimals: 2
+        unit_of_measurement: "m³"
+        device_class: "volume"
+        state_class: "total_increasing"
+        icon: "mdi:water"
+
+      - name: "volume_flow"
+        field: "volume_flow"
+        accuracy_decimals: 3
+        unit_of_measurement: "m³/h"
+        device_class: "volume_flow_rate"
+        state_class: "measurement"
+        icon: "mdi:water"
+
+
+
+

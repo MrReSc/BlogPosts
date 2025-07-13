@@ -1,0 +1,73 @@
+<h1 id="prompt-skript-zuletzt-verwendet">Prompt → Skript → Zuletzt
+verwendet</h1>
+<p>Unter Windows kann man im Kontextmenü der Taskleiste schnell auf
+zuletzt verwendete Dateien zugreifen – eine Funktion, die ich oft nutze.
+Unter GNOME gibt es so etwas leider nicht. Also habe ich mir dieses
+Feature einfach selbst gebaut – mit Bash und etwas Unterstützung von
+ChatGPT.</p>
+<p><img src="bild1.png" /></p>
+<h2
+id="vibe-coding-mit-llms-vom-zweifel-zur-gezielten-nutzung">Vibe-Coding
+mit LLMs: Vom Zweifel zur gezielten Nutzung</h2>
+<p>Vibe-Coding ist aktuell in aller Munde. Ich war anfangs ziemlich
+skeptisch – vor allem wegen der bekannten Schwächen von Sprachmodellen:
+Halluzinationen, begrenzter Kontext, fehlendes echtes Verständnis. Ich
+dachte mir: Die Intelligenz muss doch immer noch vom Programmierer
+kommen.</p>
+<p>Und das sehe ich eigentlich heute immer noch so. Der kreative
+Prozess, die Architektur und das eigentliche Verstehen – das kann (und
+soll) die KI einem nicht abnehmen. Trotzdem: Inzwischen schätze ich LLMs
+als Werkzeug sehr, vor allem beim Umsetzen von Teilaufgaben. Statt
+mühsam Foren durchzulesen oder Dokumentationen zu wälzen, frage ich
+gezielt die KI – und bekomme oft schnell eine brauchbare Antwort oder
+sogar direkt ein Skript.</p>
+<p>So auch bei diesem Projekt: Ich habe meine Recherche zuerst mit
+ChatGPT gemacht, Ideen ausprobiert, Varianten diskutiert – und danach
+liess ich mir ein Bash-Skript schreiben. Wie üblich musste ich die KI
+von einigen Dingen überzeugen, aber schlussendlich entstand ein
+lauffähiges Skript.</p>
+<h2 id="was-mein-skript-macht">Was mein Skript macht</h2>
+<p>Das Skript überwacht die Datei
+<code>~/.local/share/recently-used.xbel</code>, in der GNOME zuletzt
+verwendete Dateien speichert. Es liest daraus die aktuellsten 15
+Einträge, weist jeder Datei basierend auf ihrem Typ ein passendes Emoji
+zu (PDF, Bild, Text usw.) und generiert daraus dynamisch eine
+<code>.desktop</code>-Datei mit einem eigenen Kontextmenü.</p>
+<p>Diese <code>.desktop</code>-Datei lässt sich im GNOME-Anwendungsmenü
+oder im Dock verwenden – genau wie jede andere App-Verknüpfung. Beim
+Rechtsklick auf den Eintrag erscheinen im Kontextmenü die zuletzt
+verwendeten Dateien – direkt verlinkt und startbereit. So lassen sich
+häufig genutzte Dateien mit einem Klick öffnen, ohne den Dateimanager zu
+bemühen.</p>
+<p>Das Skript läuft im Hintergrund, überwacht Änderungen an der
+<code>recently-used.xbel</code>-Datei und aktualisiert die
+<code>.desktop</code>-Datei automatisch bei Bedarf. Auch ein kleines
+SVG-Icon wird dabei generiert, das visuell zum Menü passt.</p>
+<p>Das Projekt findest du auf GitHub:<br />
+<a
+href="https://github.com/MrReSc/recent-files-watcher">https://github.com/MrReSc/recent-files-watcher</a></p>
+<h2 id="installation-und-verwendung">Installation und Verwendung</h2>
+<p>Damit das Skript korrekt läuft, sind nur wenige Schritte nötig:</p>
+<ol type="1">
+<li><p><strong>Skript speichern und ausführbar machen</strong></p>
+<p>Speichere das Skript beispielsweise unter
+<code>~/.local/bin/recent-files-watcher.sh</code> und mache es
+ausführbar:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x ~/.local/bin/recent-files-watcher.sh</span></code></pre></div></li>
+<li><p><strong>Autostart einrichten</strong></p>
+<p>Damit das Skript bei jedem Systemstart automatisch ausgeführt wird,
+kannst du es in dein Profil eintragen. Öffne dazu z. B. deine
+<code>~/.bashrc</code>, <code>~/.bash_profile</code> oder
+<code>~/.profile</code> und füge folgende Zeile hinzu:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">~/.local/bin/recent-files-watcher.sh</span> <span class="kw">&amp;</span></span></code></pre></div></li>
+</ol>
+<h2 id="disclaimer">Disclaimer</h2>
+<p>Ich habe das Bash-Skript Zeile für Zeile gelesen und verstehe
+grundsätzlich, was es macht. Trotzdem bin ich nicht bei jedem Detail
+ganz sicher. Besonders das Debuggen fällt mir schwer, wenn ich den Code
+nicht komplett selbst geschrieben habe.</p>
+<p>Trotzdem finde ich: Dieses Projekt zeigt gut, wie man mit
+Unterstützung von LLMs wie ChatGPT eigene Ideen umsetzen kann – auch
+ohne Bash-Expert:in zu sein.</p>
