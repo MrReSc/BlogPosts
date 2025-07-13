@@ -50,7 +50,7 @@ Mit diesem vollständigen Datentelegramm und dem bekannten Schlüssel konnte ich
 
 ## Die Konfiguration der Sensoren
 
-Sobald das vollständige Telegramm entschlüsselt vorlag und die darin codierten Werte identifiziert waren, konnte ich in der ESPHome-Konfiguration die entsprechenden Sensoren für die Wärmemessung anlegen. Die ESPHome-Firmware liest nun die empfangenen wM-Bus-Telegramme des Multical 303 aus, entschlüsselt sie mit dem zuvor ermittelten Schlüssel und aktualisiert die Sensorwerte. Dank des nahtlosen Zusammenspiels über die ESPHome-API werden die Messwerte in Echtzeit an Home Assistant übertragen. Ich kann also direkt im Home Assistant beobachten, wie sich beispielsweise die momentane Wärmeleistung oder der Tagesverbrauch entwickeln.
+Sobald das vollständige Telegramm entschlüsselt vorlag und die darin codierten Werte identifiziert waren, konnte ich in der ESPHome-Konfiguration die entsprechenden Sensoren für die Wärmemessung anlegen (hier findest du meine [Konfiguartion](https://github.com/MrReSc/BlogPosts/blob/main/Multical303/esphome-web-434c44.yaml)). Die ESPHome-Firmware liest nun die empfangenen wM-Bus-Telegramme des Multical 303 aus, entschlüsselt sie mit dem zuvor ermittelten Schlüssel und aktualisiert die Sensorwerte. Dank des nahtlosen Zusammenspiels über die ESPHome-API werden die Messwerte in Echtzeit an Home Assistant übertragen. Ich kann also direkt im Home Assistant beobachten, wie sich beispielsweise die momentane Wärmeleistung oder der Tagesverbrauch entwickeln.
 
 ```yaml
 sensor:
