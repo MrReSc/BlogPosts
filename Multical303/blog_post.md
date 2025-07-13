@@ -16,6 +16,8 @@ Der Vorteil des Multical 303 liegt in seinem attraktiven Preis-Leistungs-Verhäl
 
 Um die Kommunikation mit dem Multical 303 zu ermöglichen, habe ich einen **ESP32** Mikrocontroller in Kombination mit einem **CC1101**-RF-Modul verwendet. Der CC1101 ist ein Funktransceiver, der speziell für Sub-GHz-Frequenzen wie **868 MHz** geeignet ist und damit ideal für die wM-Bus-Kommunikation genutzt werden kann. Der ESP32 wiederum ist ein leistungsstarker Mikrocontroller mit WLAN, der sich hervorragend für IoT-Projekte eignet. Das CC1101-Modul wird dabei per SPI-Schnittstelle an den ESP32 angebunden (Stromversorgung 3,3 V, GND und einige GPIO-Pins für CS/MOSI/MISO/CLK/GDO), was eine einfache Hardware-Integration ermöglicht.
 
+![](hardware.png)
+
 Da ich bereits einen **ESP32** zur Verfügung hatte, musste ich diesen nicht extra kaufen – das hat das Projekt zusätzlich kostengünstig gemacht. Für mich war es eine perfekte Möglichkeit, diesen bereits vorhandenen Mikrocontroller für das Projekt zu nutzen.
 
 ## Die Herausforderung mit wM-Bus
