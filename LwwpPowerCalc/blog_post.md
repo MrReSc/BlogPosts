@@ -1,6 +1,6 @@
 # Heizlastanalyse mit Home Assistant und offenen Messdaten
 
-Die Umstellung von fossiler Heizung auf Wärmepumpe ist eine Investition in die nächsten zwanzig Jahre. Als Ingenieur möchte ich solche Entscheidungen nicht nach Bauchgefühl treffen, sondern auf Messdaten und einfachen physikalischen Zusammenhängen. Für die Auslegung einer Wärmepumpe benötigt man die [Heizlast](https://de.wikipedia.org/wiki/Heizlast) des Gebäudes. Liegt keine aktuelle Heizlastberechnung mehr vor, kann man sie aus dem realen Verhalten der bestehenden Heizung empirisch bestimmen.
+Die Umstellung von fossiler Heizung auf Wärmepumpe (bei mir eine Luft/Wasser Wärmepumpe) ist eine Investition in die nächsten zwanzig Jahre. Als Ingenieur möchte ich solche Entscheidungen nicht nach Bauchgefühl treffen, sondern auf Messdaten und einfachen physikalischen Zusammenhängen. Für die Auslegung einer Wärmepumpe benötigt man die [Heizlast](https://de.wikipedia.org/wiki/Heizlast) des Gebäudes. Liegt keine aktuelle Heizlastberechnung mehr vor, kann man sie aus dem realen Verhalten der bestehenden Heizung empirisch bestimmen.
 
 In diesem Artikel zeige ich, wie ich die Heizlast unseres Hauses aus dem Gasverbrauch und einigen Temperaturmessungen abgeleitet habe. Die Methode kombiniert
 
@@ -11,9 +11,9 @@ In diesem Artikel zeige ich, wie ich die Heizlast unseres Hauses aus dem Gasverb
 
 Das ist bewusst kein Ersatz für eine normgerechte Heizlastberechnung. Es ist eine pragmatische, datenbasierte Abschätzung, die für die Auswahl einer passenden Wärmepumpe sehr hilfreich ist.
 
-## Hinweis zu LLM und Werkzeugkette
+## Hinweis zur Nutzung von LLM
 
-Die Diagramme habe ich mit ChatGPT erstellt. Für mich sind LLM Werkzeuge, ähnlich wie ein Compiler oder ein Tabellenkalkulationsprogramm. Die kognitive Leistung kommt weiterhin vom Menschen. Als erfahrener Softwareentwickler könnte ich alle Auswertungen auch selbst programmieren. Für einmalige, projektbezogene Analysen ist der Zeitaufwand dafür jedoch relativ hoch.
+Einige Diagramme habe ich mit ChatGPT erstellt. Für mich sind LLM Werkzeuge, ähnlich wie ein Compiler oder ein Tabellenkalkulationsprogramm. Die kognitive Leistung kommt weiterhin vom Menschen. Als erfahrener Softwareentwickler könnte ich alle Auswertungen auch selbst programmieren. Für einmalige, projektbezogene Analysen ist der Zeitaufwand dafür jedoch relativ hoch.
 
 Ein LLM kann Daten filtern, einfache Regressionen berechnen und Diagramme erstellen. Die Interpretation der Resultate und vor allem die Plausibilitätsprüfung müssen aber zwingend beim Menschen bleiben. Wer diese Verantwortung abgibt, arbeitet unsauber.
 
@@ -64,7 +64,7 @@ Home Assistant speichert standardmässig Langzeitstatistiken mit einer stündlic
 
 Wichtig ist ausserdem, dass die Heizkurve während des Messzeitraums nicht laufend verändert wird. Sonst überlagert man die physikalischen Zusammenhänge mit der eigenen Regelstrategie.
 
-## Export als CSV und Analyse mit Hirn und Plotten mit ChatGPT
+## Export als CSV, Analyse mit Hirn und Plotten mit ChatGPT
 
 ### CSV Export aus Home Assistant
 
@@ -116,9 +116,9 @@ In meinem Fall war der Datensatz aus mehreren Gründen suboptimal
 
 ChatGPT hat die Daten zwar gefiltert und geplottet. Einige unplausible Datenpunkte blieben aber im Datensatz. Zusätzlich habe ich eine zweite Kurve eingezeichnet, bei der ich von einem Wirkungsgrad der Gastherme von 0.9 ausgegangen bin. Das hilft, die thermische Energieabgabe an das Heizsystem von der im Gas enthaltenen Energiemenge zu unterscheiden.
 
-Ein Detail am Rande. In einem der erzeugten Diagramme war die rechte y Achse mit negativen Werten beschriftet, obwohl die Temperatur positiv war. Solche formalen Fehler muss man erkennen und entsprechend interpretieren. Ein LLM generiert Grafikcode, überprüft aber nicht jede Achsenkonvention.
+Ein Detail am Rande. In einem der erzeugten Diagramme war die rechte y-Achse mit negativen Werten beschriftet, obwohl die Temperatur positiv war. Auch wurden die Messpunkte mit Kreuzchen eingezeichnet, obwohl ich explizit Kreise verlangt habe. Solche formalen Fehler muss man erkennen und entsprechend interpretieren. Ein LLM generiert Grafikcode, überprüft aber nicht jede Achsenkonvention.
 
-Ich habe die Auswertung später noch einmal manuell mit einer eigenen Python Umgebung wiederholt und eine lokal gewichtete lineare Regressionslinie eingesetzt. Das Resultat wurde optisch sauberer und die Filterung präziser, dafür hat mich diese Variante einen ganzen Abend gekostet. Für eine pragmatische Abschätzung reicht die schnellere Analyse mit LLM in vielen Fällen aus. Entscheidend ist wie immer die Plausibilitätsprüfung.
+Ich habe die Auswertung später noch einmal manuell mit einer eigenen Python Umgebung wiederholt und eine lokal gewichtete lineare Regressionslinie (LOWESS, Locally Weighted Scatterplot Smoothing) eingesetzt. Das Resultat wurde optisch sauberer und die Filterung präziser, dafür hat mich diese Variante einen ganzen Abend gekostet. Für eine pragmatische Abschätzung reicht die schnellere Analyse mit LLM in vielen Fällen aus. Entscheidend ist wie immer die Plausibilitätsprüfung.
 ![alt text](Figure_1.png)
 
 ## Aussentemperatur am eigenen Ort berücksichtigen
@@ -134,7 +134,7 @@ In der Praxis werden Wärmeerzeuger häufig deutlich überdimensioniert. Das red
 Eine leicht unterdimensionierte Wärmepumpe ist in vielen Fällen sinnvoller. Im Extremfall kann ein elektrischer Heizstab für wenige Stunden pro Jahr zugeschaltet werden. In meinem konkreten Projekt hat die Wärmepumpe eine thermische Nennleistung von 5 Kilowatt bis etwa minus 15 Grad. Zusätzlich steht ein Heizstab mit 3 Kilowatt zur Verfügung.
 ![alt text](image-4.png)
 
-### Jahresstunden pro Temperaturbereich mit Meteo Schweiz
+### Jahresstunden pro Temperaturbereich mit Meteo Schweiz Daten ermitteln
 
 Um das sinnvoll zu dimensionieren, lohnt sich ein Blick auf die Statistik der Aussentemperatur. Meteo Schweiz stellt auf dem [Open Data Portal](https://www.meteoswiss.admin.ch/services-and-publications/applications/ext/download-data-without-coding-skills.html#lang=en&mdt=normal&pgid=&sid=&col=&di=&tr=&hdr=) historische Temperaturreihen von vielen Messstationen zur Verfügung. Für die eigene Auslegung wählt man eine Station mit ähnlicher Höhenlage und möglichst in der Nähe des Wohnorts und lädt sich die CSV Datei herunter.
 
