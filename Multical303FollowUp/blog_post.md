@@ -2,8 +2,6 @@
 
 [Im letzten Artikel habe ich den Multical 303 mit ESP32 und CC1101](https://gnulinux.ch/integration-des-multical-303-in-home-assistant-via-wireless-m-bus) in Home Assistant integriert. Das lief stabil, bis ich das ESPHome Gerät aktualisieren wollte. Genau dort hat es bei mir geklemmt: Mit neueren ESPHome Versionen liess sich die Firmware zwar noch bauen, aber nach dem Update startete das Gerät nicht mehr.
 
-![wmz-esphome](image.png)
-
 ## Kurz zu ESPHome und SzczepanLeon/esphome-components
 
 ESPHome ist ein Open Source Projekt, mit dem sich Mikrocontroller wie ESP32 sehr direkt in Home Assistant integrieren lassen. Konfiguration und Build laufen dabei deklarativ über YAML.
@@ -30,6 +28,7 @@ Mit [Version 5.0.0](https://github.com/SzczepanLeon/esphome-components/releases/
 
 Damit ich meine Geräte wieder sauber aktualisieren kann, habe ich den Funkteil umgestellt. Ich habe dafür ein SX1276 Breakout Board für ein paar Franken aus Fernost bestellt und den ESP32 behalten. Wichtig ist, die 868 MHz Variante für Europa zu nehmen.
 
+![alt text](image-3.png)
 
 ## Warum direkt IoTLabs einbinden
 
@@ -196,6 +195,8 @@ sensor:
     icon: "mdi:water"
 ```
 </details>
+
+![wmz-esphome](image.png)
 
 ## Fazit
 
